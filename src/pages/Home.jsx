@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
 import Button from "../components/Button.jsx";
 
+
 export default function Home() {
     const { currentUser, loading, logout } = useAuth();
     const navigate = useNavigate();
@@ -15,7 +16,6 @@ export default function Home() {
         logout();
         navigate("/");
     };
-
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-4">
             <h1 className="text-3xl font-pixelify mb-4">Welcome to the Home Page</h1>
