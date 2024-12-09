@@ -1,4 +1,5 @@
 import React from "react";
+
 const Dashboard = () => {
     return (
         <div className="min-w-screen min-h-screen flex justify-center items-center bg-blue-100">
@@ -7,4 +8,5 @@ const Dashboard = () => {
         </div>
     );
 };
+
 export default Dashboard;

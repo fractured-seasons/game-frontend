@@ -2,12 +2,16 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
 import Button from "../components/Button.jsx";
+
+
 export default function Home() {
     const { currentUser, loading, logout } = useAuth();
     const navigate = useNavigate();
+
     if (loading) {
         return <div>Loading...</div>;
     }
+
     const handleLogout = () => {
         logout();
         navigate("/");
