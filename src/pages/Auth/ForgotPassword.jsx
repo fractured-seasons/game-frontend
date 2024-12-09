@@ -4,7 +4,6 @@ import InputField from "../../components/InputField.jsx";
 import Button from "../../components/Button.jsx";
 import toast from "react-hot-toast";
 import api from "../../utils/apiUtils.js";
-import background from "../../assets/background.gif";
 
 export default function ForgotPassword() {
     const [resetRequested, setResetRequested] = useState(false);
@@ -38,11 +37,7 @@ export default function ForgotPassword() {
 
     return (
         <>
-            <div className="min-w-screen min-h-screen bg-green-500 flex justify-center items-center p-4"
-                 style={{
-                     backgroundImage: `url(${background})`,
-                 }}
-            >
+            <div className="min-w-screen min-h-screen flex justify-center items-center p-4">
                 <div className="relative w-full max-w-md md:w-2/5 lg:w-1/4 h-fit p-8 sm:p-12 rounded-3xl shadow">
                     <div className="backdrop-blur absolute inset-0 bg-white/25 rounded-3xl" />
                     <div className="relative z-10">
