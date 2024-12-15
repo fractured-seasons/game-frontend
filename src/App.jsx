@@ -10,6 +10,11 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import background from "./assets/background.gif";
 import NotFound from "./pages/NotFound.jsx";
+import PrivacyPolicy from "./pages/Support/PrivacyPolicy.jsx";
+import TermsOfUse from "./pages/Support/TermsOfUse.jsx";
+import Contact from "./pages/Support/Contact.jsx";
+import FAQ from "./pages/Support/FAQ.jsx";
+import About from "./pages/Support/About.jsx";
 
 function App() {
     const location = useLocation();
@@ -20,6 +25,7 @@ function App() {
         "/forgot-password": { type: "color", value: "bg-green-700" },
         "/reset-password": { type: "color", value: "bg-green-700" },
         "/dashboard": { type: "image", value: background },
+        "/about": { type: "image", value: background },
     };
 
     const currentBackground = backgroundStyles[location.pathname] || { type: "color", value: "bg-green-700" };
@@ -45,6 +51,11 @@ function App() {
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/about" element={<About />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
+                <Route path="/terms-of-use" element={<TermsOfUse />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />

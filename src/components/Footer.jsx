@@ -40,10 +40,10 @@ export default function Footer() {
                         <Link to="/contact" className="text-xl md:text-2xl lg:text-2xl hover:text-yellow-100">
                             Contact
                         </Link>
-                        <Link to="/terms" className="text-xl md:text-2xl lg:text-2xl hover:text-yellow-100">
+                        <Link to="/terms-of-use" className="text-xl md:text-2xl lg:text-2xl hover:text-yellow-100">
                             Terms of Use
                         </Link>
-                        <Link to="/privacy" className="text-xl md:text-2xl lg:text-2xl hover:text-yellow-100">
+                        <Link to="/privacy-policy" className="text-xl md:text-2xl lg:text-2xl hover:text-yellow-100">
                             Privacy Policy
                         </Link>
                     </div>

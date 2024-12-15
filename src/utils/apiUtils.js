@@ -29,7 +29,6 @@ api.interceptors.request.use(
                 console.error("Failed to fetch CSRF token", error);
             }
         }
-
         if (csrfToken) {
             config.headers["X-XSRF-TOKEN"] = csrfToken;
         }

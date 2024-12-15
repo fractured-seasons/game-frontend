@@ -30,7 +30,7 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            <div className={`relative backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 ${dropdownOpen ? "rounded-t-3xl" : "rounded-3xl"} mt-2 lg:mt-4 lg:ml-4 text-yellow-400 font-pixelify`}>
+            <div className={`relative z-20 backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 ${dropdownOpen ? "rounded-t-3xl" : "rounded-3xl"} mt-2 lg:mt-4 lg:ml-4 text-yellow-400 font-pixelify`}>
                 {currentUser ? (
                     <>
                         <button
