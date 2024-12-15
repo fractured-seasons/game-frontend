@@ -5,7 +5,12 @@ import Button from "../../components/Button.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import {FaGithub, FaGoogle} from "react-icons/fa6";
-import { passwordValidation, confirmPasswordValidation, emailValidation } from "../../utils/validationUtils.js";
+import {
+    passwordValidation,
+    confirmPasswordValidation,
+    emailValidation,
+    usernameValidation
+} from "../../utils/validationUtils.js";
 import background from "../../assets/background.gif";
 
 export default function Register() {
@@ -63,6 +68,7 @@ export default function Register() {
                                 register={register}
                                 errors={errors}
                                 min={8}
+                                validate={usernameValidation}
                             />
                             <InputField
                                 label="Email"
