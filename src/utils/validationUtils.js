@@ -15,3 +15,7 @@ export const confirmPasswordValidation = (value, watch) => {
 export const emailValidation = (value) => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Please enter a valid email address";
 }
+
+export const usernameValidation = (value) => {
+    return /^[a-zA-Z0-9]+$/.test(value) || "Username should only contain letters and numbers (no spaces or special characters)";
+}
