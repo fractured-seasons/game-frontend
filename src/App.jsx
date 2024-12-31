@@ -15,6 +15,7 @@ import TermsOfUse from "./pages/Support/TermsOfUse.jsx";
 import Contact from "./pages/Support/Contact.jsx";
 import FAQ from "./pages/Support/FAQ.jsx";
 import About from "./pages/Support/About.jsx";
+import OAuth2RedirectHandler from "./pages/Auth/OAuth2RedirectHandler.jsx";
 
 function App() {
     const location = useLocation();
@@ -57,6 +58,8 @@ function App() {
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="*" element={<NotFound />} />
+
+                <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
             </Routes>
             <Footer />
         </div>
