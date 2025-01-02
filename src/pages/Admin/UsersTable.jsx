@@ -13,7 +13,7 @@
         useEffect(() => {
             const fetchUsers = async () => {
                 try {
-                    const response = await api.get(`/admin/getusers?page=${page}&size=10`, {
+                    const response = await api.get(`/admin/users?page=${page}&size=10`, {
                         headers: { "Content-Type": "application/json" },
                         withCredentials: true,
                     });
