@@ -10,13 +10,13 @@ const OAuth2RedirectHandler = () => {
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
 
+
         if (token) {
             try {
+                document.cookie = 'access_token=; Path=/; Max-Age=-99999999;';
                 document.cookie = `access_token=${token}; Path=/; Secure; SameSite=Strict;`;
 
-                setTimeout(() => {
-                    navigate('/');
-                }, 100);
+                window.location.href = '/';
             } catch (error) {
                 console.error('Token decoding failed:', error);
                 setErrorMessage('Invalid token received. Please try again.');

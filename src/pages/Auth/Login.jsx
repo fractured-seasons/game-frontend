@@ -21,7 +21,7 @@
             mode: "onChange",
         });
 
-        const { setCurrentUser} = useAuth();
+        const { setCurrentUser, setIsAdmin } = useAuth();
         const navigate = useNavigate();
 
         const handleLogin = async (data) => {
@@ -29,6 +29,7 @@
                 const response = await api.post("/auth/public/signin", data);
 
                 setCurrentUser(response.data);
+                setIsAdmin(response.data.roles?.includes("ROLE_ADMIN") || false);
 
                 toast.success("Login Successful");
                 reset();

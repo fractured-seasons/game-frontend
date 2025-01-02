@@ -5,7 +5,7 @@ import ForgotPassword from "./pages/Auth/ForgotPassword.jsx";
 import ResetPassword from "./pages/Auth/ResetPassword.jsx";
 import Home from "./pages/Home.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
+import Dashboard from "./pages/Admin/Dashboard.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import background from "./assets/background.gif";
@@ -16,6 +16,9 @@ import Contact from "./pages/Support/Contact.jsx";
 import FAQ from "./pages/Support/FAQ.jsx";
 import About from "./pages/Support/About.jsx";
 import OAuth2RedirectHandler from "./pages/Auth/OAuth2RedirectHandler.jsx";
+import Profile from "./pages/User/Profile.jsx";
+import Settings from "./pages/User/Settings.jsx";
+import EditUser from "./pages/Admin/EditUser.jsx";
 
 function App() {
     const location = useLocation();
@@ -51,13 +54,17 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/dashboard" element={<PrivateRoute adminOnly={true}><Dashboard /></PrivateRoute>} />
+                <Route path="/admin/edit-user/:id" element={<PrivateRoute adminOnly={true}><EditUser /></PrivateRoute>} />
                 <Route path="/about" element={<About />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="*" element={<NotFound />} />
+
+                <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
 
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
             </Routes>

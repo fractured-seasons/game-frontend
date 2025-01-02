@@ -15,6 +15,15 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const checkAuth = async () => {
+        const token = Cookie.get('access_token');
+
+        if (!token) {
+            setCurrentUser(null);
+            setIsAdmin(false);
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await api.get("/auth/public/check-auth");
             const userData = response.data;

@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {FaHome, FaForumbee, FaBook, FaSignInAlt, FaAngleDown, FaAngleUp} from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
+import {useEffect, useRef, useState} from "react";
 
 export default function Navbar() {
-    const { currentUser, logout } = useAuth();
+    const { currentUser, logout, isAdmin } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+    const location = useLocation();
 
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
@@ -13,6 +15,23 @@ export default function Navbar() {
         logout();
         setDropdownOpen(false);
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        setDropdownOpen(false);
+    }, [location]);
 
     return (
         <div className="mx-6 mt-0 flex flex-col lg:flex-row">
@@ -48,7 +67,7 @@ export default function Navbar() {
                         </button>
 
                         {dropdownOpen && (
-                            <div className="absolute backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 rounded-b-3xl w-full z-10">
+                            <div ref={dropdownRef} className="absolute backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 rounded-b-3xl w-full z-10">
                                 <Link
                                     to="/profile"
                                     className="block py-2 px-8 text-lg hover:text-yellow-100"
@@ -61,6 +80,11 @@ export default function Navbar() {
                                 >
                                     Settings
                                 </Link>
+                                {isAdmin && (
+                                    <Link to="/dashboard" className="block py-2 px-8 text-lg hover:text-yellow-100">
+                                        Dashboard
+                                    </Link>
+                                )}
                                 <hr className="border-t-2 border-yellow-500 my-1" />
                                 <button
                                     onClick={handleLogout}
