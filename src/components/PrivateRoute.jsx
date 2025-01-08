@@ -1,12 +1,14 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import Loading from "./Loading.jsx";
+import AccessDenied from "./AccessDenied.jsx";
 
 const PrivateRoute = ({ children, adminOnly = false }) => {
     const { currentUser, isAdmin, loading } = useAuth();
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading title={"Loading..."}/>;
     }
 
     if (!currentUser) {
@@ -14,7 +16,7 @@ const PrivateRoute = ({ children, adminOnly = false }) => {
     }
 
     if (adminOnly && !isAdmin) {
-        return <Navigate to="/" />;
+        return <AccessDenied/>;
     }
 
     return children;

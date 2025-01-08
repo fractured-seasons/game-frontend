@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
 import Button from "../components/Button.jsx";
+import Loading from "../components/Loading.jsx";
 
 
 export default function Home() {
@@ -9,7 +10,7 @@ export default function Home() {
     const navigate = useNavigate();
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading title={"Loading..."}/>;
     }
 
     const handleLogout = () => {

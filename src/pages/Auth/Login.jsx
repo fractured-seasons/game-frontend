@@ -21,7 +21,7 @@
             mode: "onChange",
         });
 
-        const { setCurrentUser} = useAuth();
+        const { setCurrentUser, setIsAdmin } = useAuth();
         const navigate = useNavigate();
 
         const handleLogin = async (data) => {
@@ -29,6 +29,7 @@
                 const response = await api.post("/auth/public/signin", data);
 
                 setCurrentUser(response.data);
+                setIsAdmin(response.data.roles?.includes("ROLE_ADMIN") || false);
 
                 toast.success("Login Successful");
                 reset();
@@ -85,10 +86,10 @@
                                 <div className="flex flex-col justify-center items-center w-full my-4">
                                     <span className="font-pixelify text-md sm:text-lg mb-4">Or Continue With</span>
                                     <div className="flex">
-                                        <Link to={"/google"} className="py-2 px-8 sm:px-14 rounded-3xl bg-white hover:bg-gray-300 flex justify-center">
+                                        <Link to={`${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/google`} className="py-2 px-8 sm:px-14 rounded-3xl bg-white hover:bg-gray-300 flex justify-center">
                                             <FaGoogle/>
                                         </Link>
-                                        <Link to={"/github"} className="ml-4 py-2 px-8 sm:px-14 rounded-3xl bg-white hover:bg-gray-300 flex justify-center">
+                                        <Link to={`${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/github`} className="ml-4 py-2 px-8 sm:px-14 rounded-3xl bg-white hover:bg-gray-300 flex justify-center">
                                             <FaGithub/>
                                         </Link>
                                     </div>
