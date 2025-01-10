@@ -19,6 +19,7 @@ import OAuth2RedirectHandler from "./pages/Auth/OAuth2RedirectHandler.jsx";
 import Profile from "./pages/User/Profile.jsx";
 import Settings from "./pages/User/Settings.jsx";
 import EditUser from "./pages/Admin/EditUser.jsx";
+import ViewUser from "./pages/Admin/ViewUser.jsx";
 
 function App() {
     const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/dashboard" element={<PrivateRoute adminOnly={true}><Dashboard /></PrivateRoute>} />
                 <Route path="/admin/edit-user/:id" element={<PrivateRoute adminOnly={true}><EditUser /></PrivateRoute>} />
+                <Route path="/admin/view-user/:id" element={<ViewUser />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
