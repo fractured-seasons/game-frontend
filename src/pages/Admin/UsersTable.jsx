@@ -56,7 +56,7 @@
                     toast.success("User deleted successfully!");
                     setUsers(users.filter((user) => user.userId !== userId));
                 } catch (err) {
-                    toast.error(err.response?.data?.message || "Error deleting user");
+                    toast.error(err.response.data || "Error deleting user");
                 }
             }
         };
