@@ -2,9 +2,11 @@
     import api from "../../utils/apiUtils.js";
     import Section from "../../components/Section.jsx";
     import Pagination from "../../components/Pagination.jsx";
-    import {Link} from "react-router-dom";
+    import {useNavigate} from "react-router-dom";
+    import toast from 'react-hot-toast'
 
     export default function UsersTable() {
+        const navigate = useNavigate()
         const [users, setUsers] = useState([]);
         const [error, setError] = useState(null);
         const [page, setPage] = useState(0);
@@ -44,6 +46,21 @@
             );
         }
 
+        const handleDelete = async (userId) => {
+            if (window.confirm("Are you sure you want to delete this user?")) {
+                try {
+                    await api.delete(`/admin/delete-user/${userId}`, {
+                        headers: { "Content-Type": "application/json" },
+                        withCredentials: true,
+                    });
+                    toast.success("User deleted successfully!");
+                    setUsers(users.filter((user) => user.userId !== userId));
+                } catch (err) {
+                    toast.error(err.response?.data?.message || "Error deleting user");
+                }
+            }
+        };
+
         return (
             <div className="mx-4 mt-6 md:mx-6">
                 <Section title="User Management">
@@ -69,10 +86,24 @@
                                     <td className="px-4 py-2">
                                         {user.enabled ? "Active" : "Inactive"}
                                     </td>
-                                    <td className="px-4 py-2">
-                                        <Link to={`/admin/edit-user/${user.userId}`} className="text-yellow-400 hover:text-yellow-100">
+                                    <td className="px-4 py-2 space-x-4">
+                                        <button
+                                            onClick={() => navigate(`/admin/view-user/${user.userId}`)}
+                                            className="text-yellow-400 hover:text-yellow-100"
+                                        >
+                                            View
+                                        </button>
+                                        <button
+                                            onClick={() => navigate(`/admin/edit-user/${user.userId}`)}
+                                            className="text-yellow-400 hover:text-yellow-100">
                                             Edit
-                                        </Link>
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(user.userId)}
+                                            className="text-red-600 hover:text-red-300"
+                                        >
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
