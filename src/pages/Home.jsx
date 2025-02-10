@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading.jsx";
 import Carousel from "../components/Carousel.jsx";
 import Section from "../components/Section.jsx";
-import logo from "../assets/images/logo2.png";
+import logo from "../assets/images/logo.png";
 import img1 from "../assets/images/background.jpeg";
 import img2 from "../assets/images/logo.png";
-import img3 from "../assets/images/logo2.png";
+import img3 from "../assets/images/logo.png";
 
 export default function Home() {
     const { currentUser, loading, logout } = useAuth();

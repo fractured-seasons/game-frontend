@@ -22,7 +22,7 @@ export default function Login() {
         mode: "onChange",
     });
 
-    const {setCurrentUser, setIsAdmin} = useAuth();
+    const {setCurrentUser, setIsStaff, setRole, staffRoles} = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async (data) => {
@@ -30,7 +30,8 @@ export default function Login() {
             const response = await api.post("/auth/public/signin", data);
 
             setCurrentUser(response.data);
-            setIsAdmin(response.data.roles?.includes("ROLE_ADMIN") || false);
+            setRole(response.data.roles?.[0] || null);
+            setIsStaff(response.data.roles?.some(role => staffRoles.includes(role)) || false);
 
             toast.success("Login Successful");
             reset();

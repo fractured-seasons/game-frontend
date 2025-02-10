@@ -55,8 +55,8 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/dashboard" element={<PrivateRoute adminOnly={true}><Dashboard /></PrivateRoute>} />
-                <Route path="/admin/edit-user/:id" element={<PrivateRoute adminOnly={true}><EditUser /></PrivateRoute>} />
+                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/admin/edit-user/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
                 <Route path="/admin/view-user/:id" element={<ViewUser />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/faq" element={<FAQ />} />

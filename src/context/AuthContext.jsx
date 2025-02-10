@@ -11,15 +11,19 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isStaff, setIsStaff] = useState(false);
+    const [role, setRole] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const staffRoles = ["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_SUPPORT", "ROLE_WIKI_CONTRIBUTOR"];
 
     const checkAuth = async () => {
         const token = Cookie.get('access_token');
 
         if (!token) {
             setCurrentUser(null);
-            setIsAdmin(false);
+            setIsStaff(false);
+            setRole(null);
             setLoading(false);
             return;
         }
@@ -29,10 +33,12 @@ export const AuthProvider = ({ children }) => {
             const userData = response.data;
 
             setCurrentUser(userData);
-            setIsAdmin(userData.roles?.includes("ROLE_ADMIN") || false);
+            setRole(userData.roles?.[0] || null);
+            setIsStaff(userData.roles?.some(role => staffRoles.includes(role)) || false);
         } catch (error) {
             setCurrentUser(null);
-            setIsAdmin(false);
+            setRole(null);
+            setIsStaff(false);
         } finally {
             setLoading(false);
         }
@@ -46,7 +52,8 @@ export const AuthProvider = ({ children }) => {
             Cookie.remove("csrf_token", { path: '/', secure: true, sameSite: 'Strict' });
 
             setCurrentUser(null);
-            setIsAdmin(false);
+            setIsStaff(false);
+            setRole(null);
         } catch (error) {
             toast.error(error.response.data.message);
             console.error("Logout error", error);
@@ -60,8 +67,11 @@ export const AuthProvider = ({ children }) => {
     const value = {
         currentUser,
         setCurrentUser,
-        isAdmin,
-        setIsAdmin,
+        role,
+        setRole,
+        isStaff,
+        setIsStaff,
+        staffRoles,
         loading,
         logout,
     };

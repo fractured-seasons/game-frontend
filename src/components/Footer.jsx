@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTwitter, FaYoutube, FaDiscord } from "react-icons/fa";
-import logo from "../assets/images/logo2.png";
+import logo from "../assets/images/logo.png";
 
 export default function Footer() {
     return (
