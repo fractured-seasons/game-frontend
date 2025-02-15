@@ -80,6 +80,12 @@ export default function Navbar() {
                                 >
                                     Settings
                                 </Link>
+                                <Link
+                                    to="/tickets"
+                                    className="block py-2 px-8 text-lg hover:text-yellow-100"
+                                >
+                                    Tickets
+                                </Link>
                                 {isStaff && (
                                     <Link to="/dashboard" className="block py-2 px-8 text-lg hover:text-yellow-100">
                                         Dashboard

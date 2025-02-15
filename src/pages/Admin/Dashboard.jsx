@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import UsersTable from "./UsersTable.jsx";
 import Section from "../../components/Section.jsx";
+import TicketsTable from "../Ticket/TicketsTable.jsx";
 
 const Dashboard = () => {
     const [activeSection, setActiveSection] = useState("users");
@@ -42,9 +43,9 @@ const Dashboard = () => {
 
             <main className="flex-1 p-6">
                 {activeSection === "users" && <UsersTable />}
-                {activeSection === "tickets" && <UsersTable />}
+                {activeSection === "tickets" && <TicketsTable />}
                 {activeSection === "settings" && (
-                    <Section title={"Settings"}>
+                    <Section title={"Settings"} className="!mx-4">
                         <h2>Settings Page</h2>
                         <p>Admin settings go here...</p>
                     </Section>

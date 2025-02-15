@@ -20,6 +20,9 @@ import Profile from "./pages/User/Profile.jsx";
 import Settings from "./pages/User/Settings.jsx";
 import EditUser from "./pages/Admin/EditUser.jsx";
 import ViewUser from "./pages/Admin/ViewUser.jsx";
+import TicketsTable from "./pages/Ticket/TicketsTable.jsx";
+import CreateTicket from "./pages/Ticket/CreateTicket.jsx";
+import ViewTicket from "./pages/Ticket/ViewTicket.jsx";
 
 function App() {
     const location = useLocation();
@@ -39,7 +42,7 @@ function App() {
 
     return (
         <div
-            className={`min-h-screen min-w-screen ${
+            className={`flex flex-col min-h-screen  ${
                 !isImageBackground ? currentBackground.value : ""
             }`}
             style={
@@ -49,27 +52,33 @@ function App() {
             }
         >
             <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path="/admin/edit-user/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
-                <Route path="/admin/view-user/:id" element={<ViewUser />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
-                <Route path="/terms-of-use" element={<TermsOfUse />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="*" element={<NotFound />} />
+            <main className="flex-grow">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                    <Route path="/admin/edit-user/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
+                    <Route path="/admin/view-user/:id" element={<ViewUser />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
+                    <Route path="/terms-of-use" element={<TermsOfUse />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="*" element={<NotFound />} />
 
-                <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+                    <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                    <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
 
-                <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-            </Routes>
+                    <Route path="/tickets" element={<PrivateRoute><TicketsTable/></PrivateRoute>} />
+                    <Route path="/tickets/create" element={<PrivateRoute><CreateTicket/></PrivateRoute>} />
+                    <Route path="/tickets/view/:id" element={<PrivateRoute><ViewTicket/></PrivateRoute>} />
+
+                    <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+                </Routes>
+            </main>
             <Footer />
         </div>
     );

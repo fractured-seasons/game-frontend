@@ -15,10 +15,6 @@ const PrivateRoute = ({ children, roleName }) => {
         return <Navigate to="/login" />;
     }
 
-    if (!isStaff) {
-        return <AccessDenied/>;
-    }
-
     if (roleName && !isStaff) {
         if (role !== roleName) {
             return <AccessDenied/>;

@@ -22,7 +22,6 @@ api.interceptors.request.use(
             try {
                 const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/csrf-token`,
                     {withCredentials: true});
-
                 csrfToken = response.data.token;
                 Cookie.set("csrf_token", csrfToken, { secure: true, sameSite: "Strict" });
             } catch (error) {
