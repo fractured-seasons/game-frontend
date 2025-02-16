@@ -4,8 +4,8 @@ import { useAuth } from "../context/AuthContext.jsx";
 import Loading from "./Loading.jsx";
 import AccessDenied from "./AccessDenied.jsx";
 
-const PrivateRoute = ({ children, adminOnly = false }) => {
-    const { currentUser, isAdmin, loading } = useAuth();
+const PrivateRoute = ({ children, roleName }) => {
+    const { currentUser, isStaff, role, loading } = useAuth();
 
     if (loading) {
         return <Loading title={"Loading..."}/>;
@@ -15,8 +15,10 @@ const PrivateRoute = ({ children, adminOnly = false }) => {
         return <Navigate to="/login" />;
     }
 
-    if (adminOnly && !isAdmin) {
-        return <AccessDenied/>;
+    if (roleName && !isStaff) {
+        if (role !== roleName) {
+            return <AccessDenied/>;
+        }
     }
 
     return children;

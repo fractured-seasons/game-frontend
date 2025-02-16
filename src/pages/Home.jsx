@@ -1,46 +1,68 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
-import {Link, useNavigate} from "react-router-dom";
-import Button from "../components/Button.jsx";
+import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading.jsx";
-
+import Carousel from "../components/Carousel.jsx";
+import Section from "../components/Section.jsx";
+import logo from "../assets/images/logo.png";
+import img1 from "../assets/images/background.jpeg";
+import img2 from "../assets/images/logo.png";
+import img3 from "../assets/images/logo.png";
 
 export default function Home() {
     const { currentUser, loading, logout } = useAuth();
     const navigate = useNavigate();
 
     if (loading) {
-        return <Loading title={"Loading..."}/>;
+        return <Loading title={"Loading..."} />;
     }
 
-    const handleLogout = () => {
-        logout();
-        navigate("/");
+    const imagesPath = [img1, img2, img3];
+
+    const handleDownload = () => {
+        const link = document.createElement("a");
+        link.href = "/path/to/downloadable/file.pdf";
+        link.download = "filename.pdf";
+        link.click();
     };
+
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4">
-            <h1 className="text-3xl font-pixelify mb-4">Welcome to the Home Page</h1>
-            {!currentUser ? (
-                <div>
-                    <p className="text-xl font-pixelify mb-4">You are not logged in.</p>
-                    <Link to="/login" className="text-lg text-orange-600 hover:text-orange-700">
-                        Login here
-                    </Link>
-                </div>
-            ) : (
-                <div>
-                    <p className="text-xl font-pixelify mb-4">
-                        Welcome back, {currentUser.username}!
+        <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 sm:mt-10 lg:mt-12 flex flex-col gap-8">
+            <Section title="Welcome to Fractured Seasons">
+                <div className="flex flex-col items-center">
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className="w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/3 h-auto"
+                    />
+                    <p className="text-yellow-200 text-lg sm:text-xl lg:text-2xl mt-4 text-center">
+                        Experience a delightful 2D farming adventure,
+                        complete with vibrant characters, charming villages, and ever-changing seasons.
                     </p>
-                    <p className="text-md">You are successfully logged in.</p>
-                    <Button
-                        onClick={handleLogout}
-                        className="bg-orange-600 hover:bg-orange-700"
-                    >
-                        Logout
-                    </Button>
                 </div>
-            )}
+            </Section>
+
+            <Section title="Explore the World">
+                <Carousel images={imagesPath} />
+                <p className="text-yellow-200 text-lg sm:text-xl lg:text-2xl mt-4 text-center">
+                    Plant crops, tend to animals, and uncover hidden secrets in every corner of this lush world.
+                    Each season brings new challenges and festivals to discover.
+                </p>
+            </Section>
+
+            <Section title="Download & Play">
+                <div className="flex flex-col items-center">
+                    <p className="text-yellow-200 text-lg sm:text-xl lg:text-2xl mt-2 text-center">
+                        Ready to start your journey? Click the button below to download the game!
+                    </p>
+                    <button
+                        onClick={handleDownload}
+                        className="py-2 px-6 mt-6 rounded-3xl backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 text-yellow-400 font-pixelify hover:bg-yellow-500/40 transition-colors"
+                    >
+                        Download Now
+                    </button>
+                </div>
+            </Section>
         </div>
     );
 }

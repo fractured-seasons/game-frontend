@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaInstagram, FaTwitter, FaYoutube, FaDiscord } from "react-icons/fa";
+import logo from "../assets/images/logo.png";
 
 export default function Footer() {
     return (
@@ -23,9 +24,14 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="text-yellow-300">
-                    <h1 className="text-2xl md:text-3xl lg:text-7xl">LOGO</h1>
-                    <p className="text-lg md:text-xl lg:text-2xl mt-2">A farming adventure you'll love!</p>
+                <div className="flex flex-col items-center justify-center">
+                    {/*<h1 className="text-2xl md:text-3xl lg:text-7xl">LOGO</h1>*/}
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className="w-32 md:w-48 lg:w-64 h-auto"
+                    />
+                    <p className="text-lg md:text-xl lg:text-2xl mt-2 text-yellow-300">A farming adventure you'll love!</p>
                 </div>
 
                 <div className="flex flex-col items-center">
@@ -51,7 +57,7 @@ export default function Footer() {
             </div>
 
             <p className="mt-6 text-yellow-300 text-base md:text-lg lg:text-xl">
-                © 2024 (Game Name). All rights reserved.
+                © 2024 Fractured Seasons. All rights reserved.
             </p>
         </footer>
     );

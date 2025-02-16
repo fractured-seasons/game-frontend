@@ -79,6 +79,9 @@ export default function EditUser() {
 
     const roleOptions = [
         { label: "Admin", value: "ROLE_ADMIN" },
+        { label: "Moderator", value: "ROLE_MODERATOR" },
+        { label: "Support", value: "ROLE_SUPPORT" },
+        { label: "Wiki Contributor", value: "ROLE_WIKI_CONTRIBUTOR" },
         { label: "User", value: "ROLE_USER" }
     ];
 

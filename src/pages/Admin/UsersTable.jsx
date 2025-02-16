@@ -4,13 +4,22 @@
     import Pagination from "../../components/Pagination.jsx";
     import {useNavigate} from "react-router-dom";
     import toast from 'react-hot-toast'
+    import {useAuth} from "../../context/AuthContext.jsx";
+    import AccessDenied from "../../components/AccessDenied.jsx";
 
     export default function UsersTable() {
+        const { isStaff, role } = useAuth()
         const navigate = useNavigate()
         const [users, setUsers] = useState([]);
         const [error, setError] = useState(null);
         const [page, setPage] = useState(0);
         const [totalPages, setTotalPages] = useState(0);
+
+        if (!isStaff || role !== "ROLE_ADMIN") {
+            return (
+                <AccessDenied/>
+            );
+        }
 
         useEffect(() => {
             const fetchUsers = async () => {
@@ -56,7 +65,7 @@
                     toast.success("User deleted successfully!");
                     setUsers(users.filter((user) => user.userId !== userId));
                 } catch (err) {
-                    toast.error(err.response?.data?.message || "Error deleting user");
+                    toast.error(err.response.data || "Error deleting user");
                 }
             }
         };

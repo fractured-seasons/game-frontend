@@ -27,7 +27,7 @@ const InputField = ({
 
     return (
         <div className={`flex flex-col gap-1 ${className}`}>
-            <label htmlFor={id} className="font-pixelify text-lg sm:text-xl text-slate-800">
+            <label htmlFor={id} className="font-pixelify text-lg sm:text-xl text-yellow-400">
                 {label}
             </label>
 
@@ -36,8 +36,8 @@ const InputField = ({
                     type={type === 'password' && !isPasswordVisible ? 'password' : 'text'}
                     id={id}
                     placeholder={placeholder}
-                    className={`font-pixelify px-3 py-2 border bg-white text-slate-700 rounded-md ${
-                        autoFocus ? 'border-2' : ''
+                    className={`font-pixelify px-3 py-2 border border-yellow-600 bg-yellow-900/20 text-yellow-200 placeholder-yellow-300 rounded-md ${
+                        autoFocus ? 'border-2 border-yellow-600' : ''
                     } outline-none ${
                         errors[id]?.message ? 'border-orange-600 placeholder-orange-600' : ''
                     } focus:border-1 transition-colors w-full pr-10`}
@@ -55,7 +55,7 @@ const InputField = ({
                     <button
                         type="button"
                         onClick={togglePasswordVisibility}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-600"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-yellow-200"
                     >
                         {isPasswordVisible ? (
                             <FaEyeSlash className="w-5 h-5"/>

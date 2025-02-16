@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import {useEffect, useRef, useState} from "react";
 
 export default function Navbar() {
-    const { currentUser, logout, isAdmin } = useAuth();
+    const { currentUser, logout, isStaff } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const location = useLocation();
@@ -80,7 +80,13 @@ export default function Navbar() {
                                 >
                                     Settings
                                 </Link>
-                                {isAdmin && (
+                                <Link
+                                    to="/tickets"
+                                    className="block py-2 px-8 text-lg hover:text-yellow-100"
+                                >
+                                    Tickets
+                                </Link>
+                                {isStaff && (
                                     <Link to="/dashboard" className="block py-2 px-8 text-lg hover:text-yellow-100">
                                         Dashboard
                                     </Link>
