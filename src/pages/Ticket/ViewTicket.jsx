@@ -79,7 +79,6 @@ export default function ViewTicket() {
                 toast.success("Comment added successfully");
             } else {
                 const status = action !== "close";
-                console.log(status)
                 await api.put(
                     `/ticket/status/${id}`,
                      status,
@@ -96,6 +95,23 @@ export default function ViewTicket() {
         }
     }
 
+
+    async function handleDeactivateUser() {
+        try {
+            await api.put(
+                `/admin/deactivate?username=${ticket.createdBy.userName}`,
+                {},
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+            toast.success("User deactivated");
+            window.location.reload()
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Error processing request");
+        }
+    }
 
     return (
         <div className="mx-4 mt-6 md:mx-12 lg:mx-24 flex flex-col md:flex-row md:gap-6 justify-center">
@@ -169,6 +185,12 @@ export default function ViewTicket() {
                         ) : (
                             <Button type="button" onClick={() => handleCommentSubmit({}, "close")} className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl">
                                 Mark as solved
+                            </Button>
+                        )}
+
+                        {["ROLE_ADMIN"].includes(role) && (
+                            <Button type="button" onClick={() => handleDeactivateUser()} className="ml-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl">
+                                Deactivate user
                             </Button>
                         )}
                     </div>

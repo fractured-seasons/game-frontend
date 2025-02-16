@@ -4,7 +4,6 @@ import api from "../../utils/apiUtils.js";
 import Section from "../../components/Section.jsx";
 import Pagination from "../../components/Pagination.jsx";
 import {FaPlus} from "react-icons/fa";
-import {useAuth} from "../../context/AuthContext.jsx";
 
 export default function TicketsTable() {
     const navigate = useNavigate();
@@ -12,11 +11,10 @@ export default function TicketsTable() {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const { role } = useAuth();
 
     useEffect(() => {
         const fetchTickets = async () => {
-            const endpoint = role === "ROLE_ADMIN" || "ROLE_MODERATOR" || "ROLE_SUPPORT" ? "/ticket" : "/ticket/user";
+            const endpoint = window.location.pathname ===  "/dashboard" ? "/ticket" : "/ticket/user";
             try {
                 const response = await api.get(`${endpoint}?page=${page}&size=10`, {
                     headers: { "Content-Type": "application/json" },
