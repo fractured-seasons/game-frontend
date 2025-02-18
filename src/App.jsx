@@ -23,6 +23,9 @@ import ViewUser from "./pages/Admin/ViewUser.jsx";
 import TicketsTable from "./pages/Ticket/TicketsTable.jsx";
 import CreateTicket from "./pages/Ticket/CreateTicket.jsx";
 import ViewTicket from "./pages/Ticket/ViewTicket.jsx";
+import ForumList from "./pages/Forum/ForumList.jsx";
+import {SectionEdit} from "./pages/Forum/SectionEdit.jsx";
+import {CategoryEdit} from "./pages/Forum/CategoryEdit.jsx";
 
 function App() {
     const location = useLocation();
@@ -75,6 +78,11 @@ function App() {
                     <Route path="/tickets" element={<PrivateRoute><TicketsTable/></PrivateRoute>} />
                     <Route path="/tickets/create" element={<PrivateRoute><CreateTicket/></PrivateRoute>} />
                     <Route path="/tickets/view/:id" element={<PrivateRoute><ViewTicket/></PrivateRoute>} />
+
+                    <Route path="/forum" element={<ForumList/>}/>
+                    <Route path="/forum/edit-section/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionEdit/></PrivateRoute> }/>
+                    <Route path="/forum/edit-category/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryEdit/></PrivateRoute> }/>
+                    {/*<Route path="/forum/topics/:id" element={<PrivateRoute><TopicList/></PrivateRoute>}/>*/}
 
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
                 </Routes>

@@ -29,7 +29,6 @@ export default function CreateTicket() {
     const handleFormSubmit = async (data) => {
         setLoading(true);
         try {
-            console.log(data)
             await api.post("/ticket/create", data, {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
