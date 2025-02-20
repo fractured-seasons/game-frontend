@@ -26,6 +26,10 @@ import ViewTicket from "./pages/Ticket/ViewTicket.jsx";
 import ForumList from "./pages/Forum/ForumList.jsx";
 import {SectionEdit} from "./pages/Forum/SectionEdit.jsx";
 import {CategoryEdit} from "./pages/Forum/CategoryEdit.jsx";
+import {SectionCreate} from "./pages/Forum/SectionCreate.jsx";
+import {CategoryCreate} from "./pages/Forum/CategoryCreate.jsx";
+import TopicList from "./pages/Forum/TopicList.jsx";
+import TopicView from "./pages/Forum/TopicView.jsx";
 
 function App() {
     const location = useLocation();
@@ -80,8 +84,12 @@ function App() {
                     <Route path="/tickets/view/:id" element={<PrivateRoute><ViewTicket/></PrivateRoute>} />
 
                     <Route path="/forum" element={<ForumList/>}/>
+                    <Route path="forum/create-section" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionCreate/></PrivateRoute>}/>
                     <Route path="/forum/edit-section/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionEdit/></PrivateRoute> }/>
+                    <Route path="forum/create-category" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryCreate/></PrivateRoute>}/>
                     <Route path="/forum/edit-category/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryEdit/></PrivateRoute> }/>
+                    <Route path="/forum/topics/:categoryId" element={<PrivateRoute><TopicList/></PrivateRoute>}/>
+                    <Route path="/forum/topic/:topicId" element={<PrivateRoute><TopicView/></PrivateRoute>}/>
                     {/*<Route path="/forum/topics/:id" element={<PrivateRoute><TopicList/></PrivateRoute>}/>*/}
 
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />

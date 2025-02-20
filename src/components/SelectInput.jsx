@@ -12,13 +12,13 @@ const SelectInput = ({
                      }) => {
     return (
         <div className={`flex flex-col gap-1 ${className}`}>
-            <label htmlFor={id} className="font-pixelify text-lg sm:text-xl text-slate-800">
+            <label htmlFor={id} className="font-pixelify text-lg sm:text-xl text-yellow-400">
                 {label}
             </label>
 
             <select
                 id={id}
-                className={`font-pixelify px-3 py-2 border bg-white text-slate-700 rounded-md outline-none focus:border-1 w-full ${
+                className={`font-pixelify px-3 py-2 border border-yellow-600 bg-yellow-900/20 text-yellow-200 rounded-md outline-none focus:border-1 w-full ${
                     errors[id] ? "border-orange-600" : ""
                 }`}
                 {...register(id, { required: { value: required, message } })}
