@@ -14,7 +14,7 @@ export default function TopicList() {
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
     const { role } = useAuth();
-    const isAdmin = ["ROLE_ADMIN"].includes(role);
+    const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [page, setPage] = useState(0);
@@ -40,13 +40,25 @@ export default function TopicList() {
 
     if (loading) return <Loading title="Loading Topics..." />;
     if (error) return <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">{error}</div>;
-    if (!topics.length) return <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">No Topics Found</div>;
+    if (!topics.length)
+        return <>
+                <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">No Topics Found</div>;
+                <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-center">
+                    <button
+                        onClick={() => navigate(`/forum/topic/create/${categoryId}`)}
+                        className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-all hover:bg-yellow-500 bg-yellow-400 text-sm sm:text-base md:text-lg"
+                    >
+                        Start a new topic
+                    </button>
+                </div>
+            </>
+
 
     return (
         <>
             <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-end">
                 <button
-                    onClick={() => navigate('/forum/create-topic')}
+                    onClick={() => navigate(`/forum/topic/create/${categoryId}`)}
                     className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-all hover:bg-yellow-500 bg-yellow-400 text-sm sm:text-base md:text-lg"
                 >
                     Start a new topic

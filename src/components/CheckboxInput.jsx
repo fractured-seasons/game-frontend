@@ -1,6 +1,6 @@
 import {FaExclamationTriangle} from "react-icons/fa";
 
-const CheckmarkInput = ({
+const CheckboxInput = ({
                             label,
                             id,
                             options,
@@ -11,7 +11,7 @@ const CheckmarkInput = ({
                         }) => {
     return (
         <div className="flex flex-col gap-2">
-            <label htmlFor={id} className="font-pixelify text-lg sm:text-xl text-slate-800">
+            <label htmlFor={id} className="font-pixelify text-lg sm:text-xl text-yellow-400">
                 {label}
             </label>
             <div className="flex gap-4">
@@ -39,4 +39,4 @@ const CheckmarkInput = ({
         </div>
     );
 };
-export default CheckmarkInput;
+export default CheckboxInput;

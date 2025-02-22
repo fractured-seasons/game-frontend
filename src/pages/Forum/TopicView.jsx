@@ -4,11 +4,12 @@ import api from "../../utils/apiUtils.js";
 import Loading from "../../components/Loading.jsx";
 import Section from "../../components/Section.jsx";
 import toast from "react-hot-toast";
-import {FaEyeSlash, FaLock, FaLockOpen} from "react-icons/fa";
-import {MdPushPin} from "react-icons/md";
+import {FaEdit, FaEyeSlash, FaLock, FaLockOpen} from "react-icons/fa";
+import {MdDelete, MdPushPin} from "react-icons/md";
 import InputField from "../../components/InputField.jsx";
 import Button from "../../components/Button.jsx";
 import {useForm} from "react-hook-form";
+import {useAuth} from "../../context/AuthContext.jsx";
 
 export default function TopicView() {
     const { topicId } = useParams();
@@ -16,6 +17,8 @@ export default function TopicView() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { role, currentUser } = useAuth();
+    const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -68,9 +71,37 @@ export default function TopicView() {
         );
     }
 
+    async function handleDeleteTopic(topicId) {
+        const confirmed = window.confirm("Are you sure you want to delete this topic?");
+        if (confirmed) {
+            try {
+                const response = await api.delete(`/forum/topic/${topicId}`, {
+                    headers: {"Content-Type": "application/json"},
+                    withCredentials: true,
+                });
+                toast.success(response.data.message || "Topic deleted successfully");
+                navigate(-1);
+            } catch (err) {
+                toast.error(err.response?.data?.message || "Error deleting topic");
+            }
+        }
+    }
+
     return (
         <>
             <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 flex justify-end text-lg">
+                {(isAdmin || currentUser?.username === topic?.createdBy?.userName) && (
+                    <>
+                    <button onClick={() => navigate(`/forum/topic/edit/${topic.id}`)} className="mr-4 text-yellow-400 hover:text-yellow-500">
+                        <FaEdit />
+                    </button>
+                    <button onClick={() => handleDeleteTopic(topicId)} className="mr-4 text-yellow-400 hover:text-yellow-500">
+                        <MdDelete />
+                    </button>
+                    </>
+                )}
+
+
                 <button
                     onClick={() => navigate(-1)}
                     className="px-4 py-2 bg-yellow-400 text-white rounded-md shadow-md hover:bg-yellow-500"

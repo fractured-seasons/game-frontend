@@ -33,15 +33,19 @@ export default function ForumList() {
         fetchSections();
     }, []);
 
-
     if (loading) {
-        return <Loading title="Loading Ticket Details..." />;
+        return <Loading title="Loading forums..." />;
     }
 
     if (!sections.length) {
         return (
             <div className="text-center text-yellow-400 font-pixelify mt-12">
                 <h1 className="text-5xl">No Forums Found</h1>
+                {isAdmin && (
+                    <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 sm:mt-10 lg:mt-12 flex justify-center text-lg">
+                        <button onClick={() => navigate('/forum/create-section')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Section</button>
+                    </div>
+                )}
             </div>
         );
     }

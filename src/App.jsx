@@ -30,6 +30,8 @@ import {SectionCreate} from "./pages/Forum/SectionCreate.jsx";
 import {CategoryCreate} from "./pages/Forum/CategoryCreate.jsx";
 import TopicList from "./pages/Forum/TopicList.jsx";
 import TopicView from "./pages/Forum/TopicView.jsx";
+import {TopicCreate} from "./pages/Forum/TopicCreate.jsx";
+import {TopicEdit} from "./pages/Forum/TopicEdit.jsx";
 
 function App() {
     const location = useLocation();
@@ -90,6 +92,8 @@ function App() {
                     <Route path="/forum/edit-category/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryEdit/></PrivateRoute> }/>
                     <Route path="/forum/topics/:categoryId" element={<PrivateRoute><TopicList/></PrivateRoute>}/>
                     <Route path="/forum/topic/:topicId" element={<PrivateRoute><TopicView/></PrivateRoute>}/>
+                    <Route path="/forum/topic/create/:categoryId" element={<PrivateRoute><TopicCreate/></PrivateRoute>}/>
+                    <Route path="/forum/topic/edit/:topicId" element={<PrivateRoute><TopicEdit/></PrivateRoute>}/>
                     {/*<Route path="/forum/topics/:id" element={<PrivateRoute><TopicList/></PrivateRoute>}/>*/}
 
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
