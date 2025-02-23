@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function TopicList() {
     const { categoryId } = useParams();
     const [topics, setTopics] = useState([]);
+    const [category, setCategory] = useState({ name: "", description: "", sectionId: "" });
     const [loading, setLoading] = useState(true);
     const { role } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
@@ -35,8 +36,24 @@ export default function TopicList() {
                 setLoading(false);
             }
         };
+
         fetchTopics();
     }, [categoryId, page]);
+
+    useEffect(() => {
+        if (topics.length === 0) return;
+
+        const fetchCategory = async () => {
+            try {
+                const response = await api.get(`/forum/category/${categoryId}`);
+                setCategory(response.data);
+            } catch {
+                toast.error("Failed to fetch category");
+            }
+        };
+
+        fetchCategory();
+    }, [topics]);
 
     if (loading) return <Loading title="Loading Topics..." />;
     if (error) return <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">{error}</div>;
@@ -64,7 +81,7 @@ export default function TopicList() {
                     Start a new topic
                 </button>
             </div>
-            <Section title={topics.length > 0 ? topics[0].category.name : "Loading..."}>
+            <Section title={topics.length > 0 ? category.name : "Loading..."}>
                 {topics.map((topic) => (
                     <div
                         key={topic.id}

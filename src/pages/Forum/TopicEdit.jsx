@@ -52,7 +52,7 @@ export function TopicEdit() {
             locked: topicOptions.includes("locked"),
             hidden: topicOptions.includes("hidden"),
         };
-        console.log(formattedData)
+
         try {
             await api.put(`/forum/topic/${topicId}`, formattedData);
             toast.success("Topic updated successfully");

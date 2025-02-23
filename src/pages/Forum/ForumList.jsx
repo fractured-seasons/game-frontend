@@ -43,7 +43,7 @@ export default function ForumList() {
                 <h1 className="text-5xl">No Forums Found</h1>
                 {isAdmin && (
                     <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 sm:mt-10 lg:mt-12 flex justify-center text-lg">
-                        <button onClick={() => navigate('/forum/create-section')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Section</button>
+                        <button onClick={() => navigate('/forum/section/create')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Section</button>
                     </div>
                 )}
             </div>
@@ -91,7 +91,7 @@ export default function ForumList() {
         <>
             {isAdmin && (
                 <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 sm:mt-10 lg:mt-12 flex justify-end text-lg">
-                    <button onClick={() => navigate('/forum/create-section')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Section</button>
+                    <button onClick={() => navigate('/forum/section/create')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Section</button>
                 </div>
             )}
             {sections.map((section) => (
@@ -99,14 +99,14 @@ export default function ForumList() {
                     <>
                         {isAdmin && (
                             <div className="mb-6 flex justify-end text-lg font-light">
-                                <button onClick={() => navigate('/forum/create-category')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Category</button>
+                                <button onClick={() => navigate('/forum/category/create')} className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-colors hover:bg-yellow-500 bg-yellow-400">Create Category</button>
                             </div>
                         )}
                         <span className="flex items-center">
                             {section.name}
                             {isAdmin && (
                                 <>
-                                    < a href={`/forum/edit-section/${section.id}`} className="ml-2"><FaEdit
+                                    < a href={`/forum/section/edit/${section.id}`} className="ml-2"><FaEdit
                                         className="ml-2 text-yellow-400 hover:text-yellow-500"/></a>
                                     <button onClick={() => handleDeleteSection(section.id)}><MdDelete
                                         className="ml-2 text-yellow-400 hover:text-yellow-500"/></button>
@@ -125,7 +125,7 @@ export default function ForumList() {
                                 </a>
                                 {isAdmin && (
                                     <>
-                                        <a href={`/forum/edit-category/${category.id}`}
+                                        <a href={`/forum/category/edit/${category.id}`}
                                            className="ml-2 text-yellow-400 hover:text-yellow-500"><FaEdit/></a>
                                         <button onClick={() => handleDeleteCategory(category.id)}><MdDelete className="ml-2 text-yellow-400 hover:text-yellow-500"/></button>
                                     </>

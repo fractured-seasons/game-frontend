@@ -69,8 +69,9 @@ function App() {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                    <Route path="/admin/edit-user/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
-                    <Route path="/admin/view-user/:id" element={<ViewUser />} />
+                    <Route path="/admin/user/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
+                    <Route path="/admin/user/view/:id" element={<ViewUser />} />
+
                     <Route path="/about" element={<About />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
@@ -86,10 +87,10 @@ function App() {
                     <Route path="/tickets/view/:id" element={<PrivateRoute><ViewTicket/></PrivateRoute>} />
 
                     <Route path="/forum" element={<ForumList/>}/>
-                    <Route path="forum/create-section" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionCreate/></PrivateRoute>}/>
-                    <Route path="/forum/edit-section/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionEdit/></PrivateRoute> }/>
-                    <Route path="forum/create-category" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryCreate/></PrivateRoute>}/>
-                    <Route path="/forum/edit-category/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryEdit/></PrivateRoute> }/>
+                    <Route path="/forum/section/create" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionCreate/></PrivateRoute>}/>
+                    <Route path="/forum/section/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionEdit/></PrivateRoute> }/>
+                    <Route path="forum/category/create" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryCreate/></PrivateRoute>}/>
+                    <Route path="/forum/category/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryEdit/></PrivateRoute> }/>
                     <Route path="/forum/topics/:categoryId" element={<PrivateRoute><TopicList/></PrivateRoute>}/>
                     <Route path="/forum/topic/:topicId" element={<PrivateRoute><TopicView/></PrivateRoute>}/>
                     <Route path="/forum/topic/create/:categoryId" element={<PrivateRoute><TopicCreate/></PrivateRoute>}/>

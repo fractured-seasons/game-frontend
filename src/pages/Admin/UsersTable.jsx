@@ -97,13 +97,13 @@
                                     </td>
                                     <td className="px-4 py-2 space-x-4">
                                         <button
-                                            onClick={() => navigate(`/admin/view-user/${user.userId}`)}
+                                            onClick={() => navigate(`/admin/user/view/${user.userId}`)}
                                             className="text-yellow-400 hover:text-yellow-100"
                                         >
                                             View
                                         </button>
                                         <button
-                                            onClick={() => navigate(`/admin/edit-user/${user.userId}`)}
+                                            onClick={() => navigate(`/admin/user/edit/${user.userId}`)}
                                             className="text-yellow-400 hover:text-yellow-100">
                                             Edit
                                         </button>

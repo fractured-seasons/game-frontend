@@ -10,15 +10,23 @@ import InputField from "../../components/InputField.jsx";
 import Button from "../../components/Button.jsx";
 import {useForm} from "react-hook-form";
 import {useAuth} from "../../context/AuthContext.jsx";
+import Pagination from "../../components/Pagination.jsx";
+import ReplyEdit from "./ReplyEdit.jsx";
 
 export default function TopicView() {
     const { topicId } = useParams();
     const [topic, setTopic] = useState(null);
+    const [replies, setReplies] = useState([]);
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { role, currentUser } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
+
+    const [editReplyId, setEditReplyId] = useState(null);
+    const [editedReply, setEditedReply] = useState(null);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -39,37 +47,44 @@ export default function TopicView() {
 
         fetchTopic();
     }, [topicId]);
+    console.log(topic)
+
+    useEffect(() => {
+        const fetchReplies = async () => {
+            try {
+                const response = await api.get(`/forum/reply?topicId=${topicId}&page=${page}&size=${10}`);
+                setReplies(response.data.content);
+                setTotalPages(response.data.totalPages);
+                setLoading(false);
+            } catch (error) {
+                console.error("Failed to fetch replies", error);
+            }
+        };
+
+        fetchReplies();
+    }, [topicId, page]);
 
     const handleReplySubmit = async (data) => {
         try {
-            const response = await api.post(`/forum/topic/${topicId}/reply`, data, {
+            const payload = {
+                content: data.content,
+                topicId: topicId,
+                hidden: false,
+            };
+
+            const response = await api.post(`/forum/reply/add`, payload, {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             });
 
-            setTopic((prevTopic) => ({
-                ...prevTopic,
-                replies: [...prevTopic.replies, response.data],
-            }));
+            setReplies((prevReplies) => [...prevReplies, response.data]);
+
             reset()
             toast.success("Reply added successfully!");
-        } catch {
-            toast.error("Failed to post reply");
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Failed to post reply");
         }
     };
-
-    if (loading) {
-        return <Loading title="Loading Topic..." />;
-    }
-
-    if (error) {
-        return (
-            <div className="text-center text-yellow-400 font-pixelify mt-12">
-                <h1 className="text-5xl">Error</h1>
-                <p className="text-2xl mt-4">{error}</p>
-            </div>
-        );
-    }
 
     async function handleDeleteTopic(topicId) {
         const confirmed = window.confirm("Are you sure you want to delete this topic?");
@@ -87,21 +102,62 @@ export default function TopicView() {
         }
     }
 
+    const handleEditReply = (reply) => {
+        setEditReplyId(reply.id);
+        setEditedReply(reply);
+    };
+
+    const handleSaveEdit = (updatedReply) => {
+        setReplies(replies.map((reply) => (reply.id === updatedReply.id ? updatedReply : reply)));
+        setEditReplyId(null);
+    };
+
+    const handleCancelEdit = () => {
+        setEditReplyId(null);
+    };
+
+    async function handleDeleteReply(replyId) {
+        const confirmed = window.confirm("Are you sure you want to delete this reply?");
+        if (confirmed) {
+            try {
+                const response = await api.delete(`/forum/reply/${replyId}`, {
+                    headers: {"Content-Type": "application/json"},
+                    withCredentials: true,
+                });
+                toast.success(response.data.message || "Reply deleted successfully");
+                setReplies(replies.filter(reply => reply.id !== replyId));
+            } catch (err) {
+                toast.error(err.response?.data?.message || "Error deleting reply");
+            }
+        }
+    }
+
+    if (loading) {
+        return <Loading title="Loading Topic..." />;
+    }
+
+    if (error) {
+        return (
+            <div className="text-center text-yellow-400 font-pixelify mt-12">
+                <h1 className="text-5xl">Error</h1>
+                <p className="text-2xl mt-4">{error}</p>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 flex justify-end text-lg">
                 {(isAdmin || currentUser?.username === topic?.createdBy?.userName) && (
                     <>
-                    <button onClick={() => navigate(`/forum/topic/edit/${topic.id}`)} className="mr-4 text-yellow-400 hover:text-yellow-500">
-                        <FaEdit />
-                    </button>
-                    <button onClick={() => handleDeleteTopic(topicId)} className="mr-4 text-yellow-400 hover:text-yellow-500">
-                        <MdDelete />
-                    </button>
+                        <button onClick={() => navigate(`/forum/topic/edit/${topic.id}`)} className="mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
+                            <FaEdit />
+                        </button>
+                        <button onClick={() => handleDeleteTopic(topicId)} className="mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
+                            <MdDelete />
+                        </button>
                     </>
                 )}
-
-
                 <button
                     onClick={() => navigate(-1)}
                     className="px-4 py-2 bg-yellow-400 text-white rounded-md shadow-md hover:bg-yellow-500"
@@ -131,9 +187,9 @@ export default function TopicView() {
                 </div>
                 <hr className="border-yellow-400 mt-4" />
                 <div className="mt-4">
-                    {topic.replies?.length ? (
-                        topic.replies.map((reply) => (
-                            <div key={reply.id} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 border-b border-yellow-400 py-4">
+                    {replies.length ? (
+                        replies.map((reply) => (
+                            <div key={reply.id} className="relative flex flex-col sm:flex-row items-center sm:items-start gap-4 border-b border-yellow-400 py-4">
                                 <img
                                     src={`https://api.dicebear.com/5.x/bottts/svg?seed=${reply.createdBy.userName}`}
                                     alt="User Avatar"
@@ -142,9 +198,25 @@ export default function TopicView() {
                                 <div className="flex flex-col text-center sm:text-left">
                                     <div className="text-yellow-300 font-bold text-lg">{reply.createdBy.userName}</div>
                                     <div className="text-yellow-500 text-sm">{new Date(reply.createdAt).toLocaleDateString()}</div>
-                                    <p className="text-white mt-2">{reply.content}</p>
+                                    {editReplyId === reply.id ? (
+                                        <ReplyEdit reply={reply} onSave={handleSaveEdit} onCancel={handleCancelEdit} topicId={topicId} isAdmin={isAdmin} />
+                                    ) : (
+                                        <p className="text-white mt-2">{reply.content}</p>
+                                    )}
                                 </div>
+                                {(isAdmin || currentUser?.username === reply?.createdBy?.userName) && (
+                                    <div className="absolute top-2 right-2 flex space-x-2">
+                                        {reply.hidden && <FaEyeSlash title="Reply Hidden" className="text-yellow-400"/>}
+                                        <button onClick={() => handleEditReply(reply)} className="text-yellow-400 hover:text-yellow-500">
+                                            <FaEdit />
+                                        </button>
+                                        <button onClick={() => handleDeleteReply(reply.id)} className="text-yellow-400 hover:text-yellow-500">
+                                            <MdDelete />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
+
                         ))
                     ) : topic.locked ? (
                         <div className="text-center text-yellow-400 font-pixelify mt-4 text-lg">
@@ -155,6 +227,7 @@ export default function TopicView() {
                             No replies yet. Be the first to reply!
                         </div>
                     )}
+                    {replies.length ? (<Pagination page={page} totalPages={totalPages} setPage={setPage} />) : (<></>)}
                 </div>
                 {!topic.locked && (
                     <form onSubmit={handleSubmit(handleReplySubmit)} className="space-y-4 mt-4">
