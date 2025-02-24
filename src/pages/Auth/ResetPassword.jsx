@@ -53,7 +53,6 @@ export default function ResetPassword() {
             toast.success("Password reset successfully.");
             navigate("/login");
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || "Error resetting password");
         }
     };

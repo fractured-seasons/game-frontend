@@ -25,10 +25,8 @@ const OAuth2RedirectHandler = () => {
         } else {
             const error = params.get('error');
             if (error) {
-                console.log("Error from backend:", error);
                 setErrorMessage(error);
             } else {
-                console.log("Token not found in URL, redirecting to login");
                 navigate('/login');
             }
         }

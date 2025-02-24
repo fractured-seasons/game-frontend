@@ -40,7 +40,6 @@ export default function Register() {
             reset();
             navigate("/login");
         } catch (error) {
-            console.log(error);
             toast.error(error.response.data.message);
         }
     };

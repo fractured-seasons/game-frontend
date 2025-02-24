@@ -41,7 +41,13 @@ export default function TicketsTable() {
 
     if (!tickets.length) {
         return (
-            <div className="text-center text-yellow-400 font-pixelify mt-12">
+            <div className="text-center text-yellow-400 font-pixelify mt-12 flex flex-col items-center space-y-4">
+                <button
+                    className="bg-yellow-400 font-bold text-white py-2 px-4 rounded-lg hover:bg-yellow-500 flex items-center"
+                    onClick={() => navigate("/tickets/create")}
+                >
+                    <FaPlus className="mr-2"/> Create a new ticket
+                </button>
                 <h1 className="text-5xl">No Tickets Found</h1>
             </div>
         );

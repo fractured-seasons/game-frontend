@@ -12,6 +12,7 @@ import TextareaInput from "../../components/TextareaInput.jsx";
 
 export function TopicEdit() {
     const { topicId } = useParams();
+    const [topic, setTopic] = useState(null);
     const navigate = useNavigate();
     const { role } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
@@ -22,7 +23,7 @@ export function TopicEdit() {
         const fetchTopic = async () => {
             try {
                 const response = await api.get(`/forum/topic/${topicId}`);
-                const topic = response.data;
+                setTopic(response.data)
 
                 setValue("title", topic.title);
                 setValue("content", topic.content);
@@ -48,6 +49,7 @@ export function TopicEdit() {
         const formattedData = {
             title: data.title,
             content: data.content,
+            categoryId: topic.categoryId,
             pinned: topicOptions.includes("pinned"),
             locked: topicOptions.includes("locked"),
             hidden: topicOptions.includes("hidden"),

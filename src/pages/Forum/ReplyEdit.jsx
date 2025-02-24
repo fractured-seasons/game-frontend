@@ -26,7 +26,6 @@ export default function ReplyEdit({ reply, onSave, onCancel, topicId, isAdmin })
             onSave(updatedReply.data);
             toast.success("Reply updated successfully!");
         } catch (error) {
-            console.log(error)
             toast.error(error?.response?.data?.message || "Failed to update reply");
         }
     };

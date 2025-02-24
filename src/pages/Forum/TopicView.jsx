@@ -47,7 +47,6 @@ export default function TopicView() {
 
         fetchTopic();
     }, [topicId]);
-    console.log(topic)
 
     useEffect(() => {
         const fetchReplies = async () => {

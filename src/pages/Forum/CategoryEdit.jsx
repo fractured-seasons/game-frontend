@@ -51,7 +51,6 @@ export function CategoryEdit() {
 
     const handleUpdate = async (data) => {
         try {
-            console.log(data)
             await api.put(`/forum/category/${id}`, data);
             toast.success("Category updated successfully");
             window.location.reload();

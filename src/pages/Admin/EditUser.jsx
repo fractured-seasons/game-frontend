@@ -61,7 +61,6 @@ export default function EditUser() {
     }, [id, setValue]);
 
     const handleFormSubmit = async (data) => {
-        console.log(data)
         try {
             await api.put(`/admin/user/edit/${id}`, data, {
                 headers: { "Content-Type": "application/json" },
