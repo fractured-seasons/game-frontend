@@ -32,6 +32,7 @@ import TopicList from "./pages/Forum/TopicList.jsx";
 import TopicView from "./pages/Forum/TopicView.jsx";
 import {TopicCreate} from "./pages/Forum/TopicCreate.jsx";
 import {TopicEdit} from "./pages/Forum/TopicEdit.jsx";
+import ContactView from "./pages/Admin/ContactView.jsx";
 
 function App() {
     const location = useLocation();
@@ -71,6 +72,7 @@ function App() {
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                     <Route path="/admin/user/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
                     <Route path="/admin/user/view/:id" element={<ViewUser />} />
+                    <Route path="/admin/contact/view/:contactId" element={<PrivateRoute><ContactView/></PrivateRoute>}/>
 
                     <Route path="/about" element={<About />} />
                     <Route path="/faq" element={<FAQ />} />
@@ -95,7 +97,6 @@ function App() {
                     <Route path="/forum/topic/:topicId" element={<PrivateRoute><TopicView/></PrivateRoute>}/>
                     <Route path="/forum/topic/create/:categoryId" element={<PrivateRoute><TopicCreate/></PrivateRoute>}/>
                     <Route path="/forum/topic/edit/:topicId" element={<PrivateRoute><TopicEdit/></PrivateRoute>}/>
-                    {/*<Route path="/forum/topics/:id" element={<PrivateRoute><TopicList/></PrivateRoute>}/>*/}
 
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
                 </Routes>

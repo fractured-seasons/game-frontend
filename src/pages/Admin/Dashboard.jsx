@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import UsersTable from "./UsersTable.jsx";
 import Section from "../../components/Section.jsx";
 import TicketsTable from "../Ticket/TicketsTable.jsx";
+import ContactsTable from "./ContactsTable.jsx";
 
 const Dashboard = () => {
     const [activeSection, setActiveSection] = useState("users");
@@ -32,6 +33,14 @@ const Dashboard = () => {
                     </li>
                     <li className="hover:text-yellow-100">
                         <button
+                            className={`w-full py-2 px-4 text-lg text-left ${activeSection === "contacts" ? "text-yellow-100 " : ""}`}
+                            onClick={() => handleActionClick("contacts")}
+                        >
+                            Contacts
+                        </button>
+                    </li>
+                    <li className="hover:text-yellow-100">
+                        <button
                             className={`w-full py-2 px-4 text-lg text-left ${activeSection === "settings" ? "text-yellow-100 " : ""}`}
                             onClick={() => handleActionClick("settings")}
                         >
@@ -44,6 +53,7 @@ const Dashboard = () => {
             <main className="flex-1 p-6">
                 {activeSection === "users" && <UsersTable />}
                 {activeSection === "tickets" && <TicketsTable />}
+                {activeSection === "contacts" && <ContactsTable />}
                 {activeSection === "settings" && (
                     <Section title={"Settings"} className="!mx-4">
                         <h2>Settings Page</h2>

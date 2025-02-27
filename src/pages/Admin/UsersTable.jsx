@@ -58,7 +58,7 @@
         const handleDelete = async (userId) => {
             if (window.confirm("Are you sure you want to delete this user?")) {
                 try {
-                    await api.delete(`/admin/delete-user/${userId}`, {
+                    await api.delete(`/admin/user/delete/${userId}`, {
                         headers: { "Content-Type": "application/json" },
                         withCredentials: true,
                     });

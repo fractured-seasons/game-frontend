@@ -23,15 +23,16 @@ export function TopicEdit() {
         const fetchTopic = async () => {
             try {
                 const response = await api.get(`/forum/topic/${topicId}`);
+                const topicData = response.data;
                 setTopic(response.data)
 
-                setValue("title", topic.title);
-                setValue("content", topic.content);
+                setValue("title", topicData.title);
+                setValue("content", topicData.content);
 
                 const options = [];
-                if (topic.pinned) options.push("pinned");
-                if (topic.locked) options.push("locked");
-                if (topic.hidden) options.push("hidden");
+                if (topicData.pinned) options.push("pinned");
+                if (topicData.locked) options.push("locked");
+                if (topicData.hidden) options.push("hidden");
                 setValue("topicOptions", options);
 
                 setLoading(false);
