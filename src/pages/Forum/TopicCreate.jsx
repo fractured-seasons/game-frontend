@@ -7,7 +7,7 @@ import InputField from "../../components/InputField.jsx";
 import Button from "../../components/Button.jsx";
 import Section from "../../components/Section.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
-import TextareaInput from "../../components/TextareaInput.jsx";
+import TextAreaInput from "../../components/TextAreaInput.jsx";
 import CheckboxInput from "../../components/CheckboxInput.jsx";
 
 export function TopicCreate() {
@@ -56,7 +56,7 @@ export function TopicCreate() {
         <Section title={`Create Topic in ${category ? category.name : "Loading..."}`}>
             <form onSubmit={handleSubmit(handleCreate)} className="space-y-6">
                 <InputField label="Topic Title" id="title" type="text" register={register} errors={errors} required />
-                <TextareaInput label="Content" id="content" register={register} errors={errors} required />
+                <TextAreaInput label="Content" id="content" register={register} errors={errors} required />
                 {isAdmin && (
                         <CheckboxInput
                             label="Options"

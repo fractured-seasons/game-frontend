@@ -5,11 +5,11 @@ import Section from "../../components/Section.jsx";
 import Loading from "../../components/Loading.jsx";
 import toast from "react-hot-toast";
 import {useForm} from "react-hook-form";
-import TextareaInput from "../../components/TextareaInput.jsx";
+import TextAreaInput from "../../components/TextAreaInput.jsx";
 import Button from "../../components/Button.jsx";
 import {useAuth} from "../../context/AuthContext.jsx";
 
-export default function ViewTicket() {
+export default function TicketView() {
     const { id } = useParams();
     const [ticket, setTicket] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -165,7 +165,7 @@ export default function ViewTicket() {
                     </ul>
                 </div>
                 <form onSubmit={(e) => e.preventDefault()}>
-                    <TextareaInput
+                    <TextAreaInput
                         id="comment"
                         type="url"
                         register={register}

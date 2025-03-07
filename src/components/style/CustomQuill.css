@@ -1,0 +1,36 @@
+/* CustomQuill.css */
+.ql-container {
+    border: 1px solid #d69e2e !important;
+    border-radius: 5px;
+}
+
+.ql-toolbar {
+    border: 1px solid #d69e2e !important;
+    border-bottom: none !important;
+    border-radius: 5px 5px 0 0;
+}
+
+.ql-toolbar .ql-stroke {
+    stroke: #f6e05e; /* Change icon stroke color */
+}
+
+.ql-toolbar .ql-fill {
+    fill: #f6e05e; /* Change icon fill color */
+}
+
+.ql-toolbar button:hover .ql-stroke {
+    stroke: #ecc94b; /* Change icon stroke color on hover */
+}
+
+.ql-toolbar button:hover .ql-fill {
+    fill: #ecc94b; /* Change icon fill color on hover */
+}
+
+.custom-select {
+    font-family: 'Arial', sans-serif; /* Default font for select */
+    font-size: 1rem;
+}
+
+.custom-select:focus {
+    border-color: #d69e2e; /* Same color for border focus as toolbar */
+}

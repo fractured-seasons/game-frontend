@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import Loading from "./Loading.jsx";
 import AccessDenied from "./AccessDenied.jsx";
 
-const PrivateRoute = ({ children, roleName }) => {
+const PrivateRoute = ({ children, roleNames = [] }) => {
     const { currentUser, isStaff, role, loading } = useAuth();
 
     if (loading) {
@@ -15,8 +15,8 @@ const PrivateRoute = ({ children, roleName }) => {
         return <Navigate to="/login" />;
     }
 
-    if (roleName && !isStaff) {
-        if (role !== roleName) {
+    if (roleNames.length > 0 && isStaff) {
+        if (!roleNames.includes(role)) {
             return <AccessDenied/>;
         }
     }

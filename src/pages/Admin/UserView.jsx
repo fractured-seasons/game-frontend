@@ -5,7 +5,7 @@ import Section from "../../components/Section.jsx";
 import Loading from "../../components/Loading.jsx";
 import toast from "react-hot-toast";
 
-export default function ViewUser() {
+export default function UserView() {
     const { id } = useParams();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);

@@ -6,16 +6,17 @@ import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../context/AuthContext.jsx";
 import AccessDenied from "../../components/AccessDenied.jsx";
 import Loading from "../../components/Loading.jsx";
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
-export default function ContactsTable() {
+export default function ArticlesTable() {
     const { isStaff, role } = useAuth()
     const navigate = useNavigate()
-    const [contacts, setContacts] = useState([]);
+    const [articles, setArticles] = useState([]);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
-    if (!isStaff || !["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_SUPPORT"].includes(role)) {
+    if (!isStaff || !["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_WIKI_CONTRIBUTOR"].includes(role)) {
         return (
             <AccessDenied/>
         );
@@ -24,14 +25,14 @@ export default function ContactsTable() {
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const response = await api.get(`/contact?page=${page}&size=10`, {
+                const response = await api.get(`/wiki/article?page=${page}&size=10`, {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
                 });
-                setContacts(response.data.content);
+                setArticles(response.data.content);
                 setTotalPages(response.data.totalPages);
             } catch (err) {
-                setError(err.response?.data?.message || "Error fetching contacts");
+                setError(err.response?.data?.message || "Error fetching wiki articles");
             }
         };
 
@@ -47,7 +48,7 @@ export default function ContactsTable() {
         );
     }
 
-    if (!contacts.length) {
+    if (!articles.length) {
         return (
             <Loading/>
         );
@@ -55,34 +56,46 @@ export default function ContactsTable() {
 
     return (
         <div className="mx-4 md:mx-6">
-            <Section title="Contacts Management" className="!mx-4" marginTop={false}>
+            <Section title="Wiki Management" className="!mx-4" marginTop={false}>
                 <div className="overflow-x-auto bg-white shadow-md rounded-lg">
                     <table className="min-w-full table-auto">
                         <thead className="bg-yellow-400 text-white">
-                        <tr>
-                            <th className="px-4 py-2 text-left">Name</th>
-                            <th className="px-4 py-2 text-left">Email</th>
-                            <th className="px-4 py-2 text-left">Created</th>
+                        <tr className="px-4 py-2 text-center">
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Hidden</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {contacts.map((contact) => (
-                            <tr key={contact.id} className="bg-yellow-600 text-yellow-100">
+                        {articles.map((article) => (
+                            <tr key={article.id} className="bg-yellow-600 text-yellow-100 text-center">
                                 <td className="px-4 py-2">
                                     <button
                                         className="text-yellow-300 hover:underline"
-                                        onClick={() => navigate(`/admin/contact/view/${contact.id}`)}
+                                        onClick={() => navigate(`/admin/article/view/${article.slug}`)}
                                     >
                                         {(
-                                            contact.name
+                                            article.title
                                         ).length > 30
-                                            ? (contact.name).slice(0, 30) + "..."
-                                            : contact.name
+                                            ? (article.title).slice(0, 30) + "..."
+                                            : article.title
                                         }
                                     </button>
                                 </td>
-                                <td className="px-4 py-2">{contact.email}</td>
-                                <td className="px-4 py-2">{new Date(contact.createdAt).toLocaleDateString()}</td>
+                                <td className="px-4 py-2">{article.categoryTitle || "No Category"}</td>
+                                <td className="px-4 py-2">
+                                    {article.approvalStatus === "APPROVED" ? (
+                                        <span className="p-1 rounded-lg bg-green-700">approved</span>
+                                    ) : article.approvalStatus === "REJECTED" ? (
+                                        <span className="p-1 rounded-lg bg-red-700">rejected</span>
+                                    ) : article.approvalStatus === "PENDING" ? (
+                                        <span className="p-1 rounded-lg bg-orange-500">pending</span>
+                                    ) : null}
+                                </td>
+                                <td className="px-4 py-2">{new Date(article.createdAt).toLocaleDateString()}</td>
+                                <td className="px-4 py-2 flex justify-center">{article.hidden ? <FaEyeSlash title="Article Hidden" /> : <FaEye title="Article Visible" />}</td>
                             </tr>
                         ))}
                         </tbody>

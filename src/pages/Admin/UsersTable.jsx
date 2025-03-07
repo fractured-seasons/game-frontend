@@ -71,8 +71,8 @@
         };
 
         return (
-            <div className="mx-4 mt-6 md:mx-6">
-                <Section title="User Management">
+            <div className="mx-4 md:mx-6">
+                <Section title="User Management" className="!mx-4" marginTop={false}>
                     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
                         <table className="min-w-full table-auto">
                             <thead className="bg-yellow-400 text-white">

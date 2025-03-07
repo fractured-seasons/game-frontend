@@ -4,11 +4,20 @@ import api from "../../utils/apiUtils.js";
 import Section from "../../components/Section.jsx";
 import Loading from "../../components/Loading.jsx";
 import toast from "react-hot-toast";
+import AccessDenied from "../../components/AccessDenied.jsx";
+import {useAuth} from "../../context/AuthContext.jsx";
 
 export default function ContactView() {
+    const { isStaff, role } = useAuth()
     const { contactId } = useParams();
     const [contact, setContact] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    if (!isStaff || !["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_SUPPORT"].includes(role)) {
+        return (
+            <AccessDenied/>
+        );
+    }
 
     useEffect(() => {
         const fetchContact = async () => {

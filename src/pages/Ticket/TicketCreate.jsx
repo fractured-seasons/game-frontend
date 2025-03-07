@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import api from "../../utils/apiUtils.js";
 import Section from "../../components/Section.jsx";
 import InputField from "../../components/InputField.jsx";
-import TextareaInput from "../../components/TextareaInput.jsx";
+import TextAreaInput from "../../components/TextAreaInput.jsx";
 import Button from "../../components/Button.jsx";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Loading from "../../components/Loading.jsx";
 
-export default function CreateTicket() {
+export default function TicketCreate() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
@@ -62,7 +62,7 @@ export default function CreateTicket() {
                             placeholder="Enter the ticket title"
                         />
 
-                        <TextareaInput
+                        <TextAreaInput
                             label="Describe your situation"
                             id="postDetails"
                             required

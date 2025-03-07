@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import TextareaInput from "../../components/TextareaInput.jsx";
+import TextAreaInput from "../../components/TextAreaInput.jsx";
 import Button from "../../components/Button.jsx";
 import api from "../../utils/apiUtils";
 import toast from "react-hot-toast";
@@ -32,7 +32,7 @@ export default function ReplyEdit({ reply, onSave, onCancel, topicId, isAdmin })
 
     return (
         <form onSubmit={handleSubmit(handleUpdate)} className="space-y-4">
-            <TextareaInput
+            <TextAreaInput
                 label="Edit Reply"
                 id="content"
                 register={register}

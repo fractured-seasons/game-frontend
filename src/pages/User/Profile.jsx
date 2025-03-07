@@ -49,6 +49,8 @@ export default function Profile() {
         credentialsNonExpired,
         enabled,
         twoFactorEnabled,
+        wikiContributions,
+        forumPosts,
     } = userDetails;
     const transformedRoles = roles.map(role => role.replace("ROLE_", ""));
 
@@ -86,11 +88,11 @@ export default function Profile() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
                     <div className="bg-yellow-500/25 rounded-3xl p-4 md:p-6 text-center">
                         <h3 className="text-xl md:text-2xl text-yellow-400">Forum Posts</h3>
-                        <p className="text-lg text-yellow-300">120 Posts</p>
+                        <p className="text-lg text-yellow-300">{forumPosts}</p>
                     </div>
                     <div className="bg-yellow-500/25 rounded-3xl p-4 md:p-6 text-center">
                         <h3 className="text-xl md:text-2xl text-yellow-400">Wiki Contributions</h3>
-                        <p className="text-lg text-yellow-300">45 Edits</p>
+                        <p className="text-lg text-yellow-300">{wikiContributions}</p>
                     </div>
                     <div className="bg-yellow-500/25 rounded-3xl p-4 md:p-6 text-center">
                         <h3 className="text-xl md:text-2xl text-yellow-400">Achievements</h3>
