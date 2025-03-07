@@ -9,7 +9,7 @@ import Dashboard from "./pages/Admin/Dashboard.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import background from "./assets/images/background.gif";
-import NotFound from "./pages/NotFound.jsx";
+import NotFound from "./pages/errors/NotFound.jsx";
 import PrivacyPolicy from "./pages/Support/PrivacyPolicy.jsx";
 import TermsOfUse from "./pages/Support/TermsOfUse.jsx";
 import Contact from "./pages/Support/Contact.jsx";
@@ -18,21 +18,27 @@ import About from "./pages/Support/About.jsx";
 import OAuth2RedirectHandler from "./pages/Auth/OAuth2RedirectHandler.jsx";
 import Profile from "./pages/User/Profile.jsx";
 import Settings from "./pages/User/Settings.jsx";
-import EditUser from "./pages/Admin/EditUser.jsx";
-import ViewUser from "./pages/Admin/ViewUser.jsx";
+import UserEdit from "./pages/Admin/UserEdit.jsx";
+import UserView from "./pages/Admin/UserView.jsx";
 import TicketsTable from "./pages/Ticket/TicketsTable.jsx";
-import CreateTicket from "./pages/Ticket/CreateTicket.jsx";
-import ViewTicket from "./pages/Ticket/ViewTicket.jsx";
+import TicketCreate from "./pages/Ticket/TicketCreate.jsx";
+import TicketView from "./pages/Ticket/TicketView.jsx";
 import ForumList from "./pages/Forum/ForumList.jsx";
 import {SectionEdit} from "./pages/Forum/SectionEdit.jsx";
-import {CategoryEdit} from "./pages/Forum/CategoryEdit.jsx";
+import {CategoryEdit as ForumCategoryEdit} from "./pages/Forum/CategoryEdit.jsx";
 import {SectionCreate} from "./pages/Forum/SectionCreate.jsx";
-import {CategoryCreate} from "./pages/Forum/CategoryCreate.jsx";
+import {CategoryCreate as ForumCategoryCreate} from "./pages/Forum/CategoryCreate.jsx";
 import TopicList from "./pages/Forum/TopicList.jsx";
 import TopicView from "./pages/Forum/TopicView.jsx";
 import {TopicCreate} from "./pages/Forum/TopicCreate.jsx";
 import {TopicEdit} from "./pages/Forum/TopicEdit.jsx";
 import ContactView from "./pages/Admin/ContactView.jsx";
+import {ArticleCreate} from "./pages/Wiki/ArticleCreate.jsx";
+import {Home as WikiHome} from "./pages/Wiki/Home.jsx";
+import {CategoryCreate as WikiCategoryCreate} from "./pages/Wiki/CategoryCreate.jsx";
+import {CategoryEdit as WikiCategoryEdit} from "./pages/Wiki/CategoryEdit.jsx";
+import {ArticleEdit} from "./pages/Wiki/ArticleEdit.jsx";
+import ArticleView from "./pages/Wiki/ArticleView.jsx";
 
 function App() {
     const location = useLocation();
@@ -65,14 +71,17 @@ function App() {
             <main className="flex-grow">
                 <Routes>
                     <Route path="/" element={<Home />} />
+
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
+
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                    <Route path="/admin/user/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><EditUser /></PrivateRoute>} />
-                    <Route path="/admin/user/view/:id" element={<ViewUser />} />
-                    <Route path="/admin/contact/view/:contactId" element={<PrivateRoute><ContactView/></PrivateRoute>}/>
+                    <Route path="/admin/user/edit/:id" element={<PrivateRoute roleNames={["ROLE_ADMIN"]}><UserEdit /></PrivateRoute>} />
+                    <Route path="/admin/user/view/:id" element={<UserView />} />
+                    <Route path="/admin/contact/view/:contactId" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_SUPPORT"]}><ContactView/></PrivateRoute>}/>
+                    <Route path="/admin/article/view/:articleSlug" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_WIKI_CONTRIBUTOR"]}><ArticleView/></PrivateRoute>}/>
 
                     <Route path="/about" element={<About />} />
                     <Route path="/faq" element={<FAQ />} />
@@ -85,18 +94,24 @@ function App() {
                     <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
 
                     <Route path="/tickets" element={<PrivateRoute><TicketsTable/></PrivateRoute>} />
-                    <Route path="/tickets/create" element={<PrivateRoute><CreateTicket/></PrivateRoute>} />
-                    <Route path="/tickets/view/:id" element={<PrivateRoute><ViewTicket/></PrivateRoute>} />
+                    <Route path="/tickets/create" element={<PrivateRoute><TicketCreate/></PrivateRoute>} />
+                    <Route path="/tickets/view/:id" element={<PrivateRoute><TicketView/></PrivateRoute>} />
 
                     <Route path="/forum" element={<ForumList/>}/>
-                    <Route path="/forum/section/create" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionCreate/></PrivateRoute>}/>
-                    <Route path="/forum/section/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><SectionEdit/></PrivateRoute> }/>
-                    <Route path="forum/category/create" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryCreate/></PrivateRoute>}/>
-                    <Route path="/forum/category/edit/:id" element={<PrivateRoute roleName={"ROLE_ADMIN"}><CategoryEdit/></PrivateRoute> }/>
+                    <Route path="/forum/section/create" element={<PrivateRoute roleNames={["ROLE_ADMIN"]}><SectionCreate/></PrivateRoute>}/>
+                    <Route path="/forum/section/edit/:id" element={<PrivateRoute roleNames={["ROLE_ADMIN"]}><SectionEdit/></PrivateRoute> }/>
+                    <Route path="/forum/category/create" element={<PrivateRoute roleNames={["ROLE_ADMIN"]}><ForumCategoryCreate/></PrivateRoute>}/>
+                    <Route path="/forum/category/edit/:id" element={<PrivateRoute roleNames={["ROLE_ADMIN"]}><ForumCategoryEdit/></PrivateRoute> }/>
                     <Route path="/forum/topics/:categoryId" element={<PrivateRoute><TopicList/></PrivateRoute>}/>
                     <Route path="/forum/topic/:topicId" element={<PrivateRoute><TopicView/></PrivateRoute>}/>
                     <Route path="/forum/topic/create/:categoryId" element={<PrivateRoute><TopicCreate/></PrivateRoute>}/>
                     <Route path="/forum/topic/edit/:topicId" element={<PrivateRoute><TopicEdit/></PrivateRoute>}/>
+
+                    <Route path="/wiki" element={<WikiHome/>}/>
+                    <Route path="/wiki/category/create" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR"]}><WikiCategoryCreate/></PrivateRoute>}/>
+                    <Route path="/wiki/category/edit/:categoryId" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR"]}><WikiCategoryEdit/></PrivateRoute>}/>
+                    <Route path="/wiki/article/create" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_WIKI_CONTRIBUTOR"]}><ArticleCreate/></PrivateRoute>}/>
+                    <Route path="/wiki/article/edit/:articleSlug" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_WIKI_CONTRIBUTOR"]}><ArticleEdit/></PrivateRoute>}/>
 
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
                 </Routes>

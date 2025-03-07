@@ -1,6 +1,6 @@
 import { FaExclamationTriangle } from 'react-icons/fa';
 
-const TextareaInput = ({
+const TextAreaInput = ({
                            label,
                            id,
                            errors,
@@ -52,4 +52,4 @@ const TextareaInput = ({
     );
 };
 
-export default TextareaInput;
+export default TextAreaInput;

@@ -8,7 +8,7 @@ import CheckboxInput from "../../components/CheckboxInput.jsx";
 import Button from "../../components/Button.jsx";
 import Section from "../../components/Section.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
-import TextareaInput from "../../components/TextareaInput.jsx";
+import TextAreaInput from "../../components/TextAreaInput.jsx";
 
 export function TopicEdit() {
     const { topicId } = useParams();
@@ -71,7 +71,7 @@ export function TopicEdit() {
         <Section title="Edit Topic">
             <form onSubmit={handleSubmit(handleUpdate)} className="space-y-6">
                 <InputField label="Topic Title" id="title" type="text" register={register} errors={errors} required />
-                <TextareaInput label="Content" id="content" register={register} errors={errors} required />
+                <TextAreaInput label="Content" id="content" register={register} errors={errors} required />
                 {isAdmin && (
                     <CheckboxInput
                         label="Options"

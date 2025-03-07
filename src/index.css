@@ -8,3 +8,10 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@layer components {
+    .custom-select option {
+        background-color: theme('colors.yellow.900');
+        color: theme('colors.yellow.400');
+    }
+}

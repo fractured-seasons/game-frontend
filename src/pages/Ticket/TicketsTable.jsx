@@ -54,8 +54,8 @@ export default function TicketsTable() {
     }
 
     return (
-        <div className="mx-4 mt-6 md:mx-6">
-            <Section title="Your Tickets">
+        <div className="mx-4 md:mx-6">
+            <Section title="Your Tickets" className="!mx-4" marginTop={false}>
                 <div className="text-right mb-4 flex items-center justify-end">
                     <button
                         className="bg-yellow-400 font-bold text-white py-2 px-4 rounded-lg hover:bg-yellow-500 flex items-center"

@@ -14,7 +14,7 @@ import {
 } from "../../utils/validationUtils.js";
 import Loading from "../../components/Loading.jsx";
 
-export default function EditUser() {
+export default function UserEdit() {
     const { id } = useParams();
     const [userDetails, setUserDetails] = useState({
         username: "",

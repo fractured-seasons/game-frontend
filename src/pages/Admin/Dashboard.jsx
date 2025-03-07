@@ -3,6 +3,7 @@ import UsersTable from "./UsersTable.jsx";
 import Section from "../../components/Section.jsx";
 import TicketsTable from "../Ticket/TicketsTable.jsx";
 import ContactsTable from "./ContactsTable.jsx";
+import ArticleTable from "./ArticlesTable.jsx";
 
 const Dashboard = () => {
     const [activeSection, setActiveSection] = useState("users");
@@ -41,6 +42,14 @@ const Dashboard = () => {
                     </li>
                     <li className="hover:text-yellow-100">
                         <button
+                            className={`w-full py-2 px-4 text-lg text-left ${activeSection === "wiki" ? "text-yellow-100 " : ""}`}
+                            onClick={() => handleActionClick("wiki")}
+                        >
+                            Wiki
+                        </button>
+                    </li>
+                    <li className="hover:text-yellow-100">
+                        <button
                             className={`w-full py-2 px-4 text-lg text-left ${activeSection === "settings" ? "text-yellow-100 " : ""}`}
                             onClick={() => handleActionClick("settings")}
                         >
@@ -54,8 +63,9 @@ const Dashboard = () => {
                 {activeSection === "users" && <UsersTable />}
                 {activeSection === "tickets" && <TicketsTable />}
                 {activeSection === "contacts" && <ContactsTable />}
+                {activeSection === "wiki" && <ArticleTable />}
                 {activeSection === "settings" && (
-                    <Section title={"Settings"} className="!mx-4">
+                    <Section title={"Settings"} className="!mx-4" marginTop={false}>
                         <h2>Settings Page</h2>
                         <p>Admin settings go here...</p>
                     </Section>

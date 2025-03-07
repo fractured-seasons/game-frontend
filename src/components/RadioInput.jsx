@@ -12,7 +12,7 @@ const RadioInput = ({
                     }) => {
     return (
         <div className={`flex flex-col gap-1 ${className}`}>
-            <label className="font-pixelify text-lg sm:text-xl text-slate-800">{label}</label>
+            <label className="font-pixelify text-lg sm:text-xl text-yellow-400">{label}</label>
 
             <div className="flex gap-4">
                 {options.map((option) => (
