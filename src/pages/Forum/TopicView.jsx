@@ -53,7 +53,7 @@ export default function TopicView() {
             try {
                 const response = await api.get(`/forum/reply?topicId=${topicId}&page=${page}&size=${10}`);
                 setReplies(response.data.content);
-                setTotalPages(response.data.totalPages);
+                setTotalPages(response.data.page.totalPages);
                 setLoading(false);
             } catch (error) {
                 console.error("Failed to fetch replies", error);

@@ -21,7 +21,7 @@ export default function TicketsTable() {
                     withCredentials: true,
                 });
                 setTickets(response.data.content);
-                setTotalPages(response.data.totalPages);
+                setTotalPages(response.data.page.totalPages);
             } catch (err) {
                 setError(err.response?.data?.message || "Error fetching tickets");
             }
@@ -55,7 +55,7 @@ export default function TicketsTable() {
 
     return (
         <div className="mx-4 md:mx-6">
-            <Section title="Your Tickets" className="!mx-4" marginTop={false}>
+            <Section title="Your Tickets" className="!mx-4" marginTop={!window.location.pathname.includes("dashboard")}>
                 <div className="text-right mb-4 flex items-center justify-end">
                     <button
                         className="bg-yellow-400 font-bold text-white py-2 px-4 rounded-lg hover:bg-yellow-500 flex items-center"

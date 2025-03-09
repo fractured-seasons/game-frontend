@@ -30,7 +30,7 @@ export default function ArticlesTable() {
                     withCredentials: true,
                 });
                 setArticles(response.data.content);
-                setTotalPages(response.data.totalPages);
+                setTotalPages(response.data.page.totalPages);
             } catch (err) {
                 setError(err.response?.data?.message || "Error fetching wiki articles");
             }

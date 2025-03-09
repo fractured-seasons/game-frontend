@@ -20,6 +20,7 @@ export default function TopicList() {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         const fetchTopics = async () => {
@@ -29,7 +30,7 @@ export default function TopicList() {
                     withCredentials: true,
                 });
                 setTopics(response.data.content);
-                setTotalPages(response.data.totalPages);
+                setTotalPages(response.data.page.totalPages);
                 setLoading(false);
             } catch (err) {
                 setError(err.response?.data?.message || "Error fetching topics");
@@ -55,6 +56,16 @@ export default function TopicList() {
         fetchCategory();
     }, [topics]);
 
+    const handleSearch = async () => {
+        if (!searchQuery.trim()) return;
+        try {
+            const response = await api.get(`/forum/topic/search?query=${searchQuery}`);
+            setTopics(response.data);
+        } catch {
+            toast.error("Error searching topics");
+        }
+    };
+
     if (loading) return <Loading title="Loading Topics..." />;
     if (error) return <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">{error}</div>;
     if (!topics.length)
@@ -73,7 +84,14 @@ export default function TopicList() {
 
     return (
         <>
-            <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-end">
+            <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-end space-x-2">
+                <input
+                    type="text"
+                    placeholder="Search topics..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="py-2 px-3 border border-yellow-600 bg-yellow-900/20 text-yellow-200 placeholder-yellow-300 rounded-md focus:border-1 transition-colors pr-10"
+                />
                 <button
                     onClick={() => navigate(`/forum/topic/create/${categoryId}`)}
                     className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-all hover:bg-yellow-500 bg-yellow-400 text-sm sm:text-base md:text-lg"

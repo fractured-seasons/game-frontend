@@ -29,7 +29,7 @@ export default function ContactsTable() {
                     withCredentials: true,
                 });
                 setContacts(response.data.content);
-                setTotalPages(response.data.totalPages);
+                setTotalPages(response.data.page.totalPages);
             } catch (err) {
                 setError(err.response?.data?.message || "Error fetching contacts");
             }

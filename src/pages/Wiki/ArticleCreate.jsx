@@ -56,17 +56,15 @@ export function ArticleCreate() {
 
     const handleCreate = async (data) => {
         const content = getValues("content");
-
         const imageUrls = extractImagesFromContent(content);
 
         let updatedContent = content;
         for (const imageUrl of imageUrls) {
-            if (imageUrl.startsWith("blob:")) {
                 const uploadedUrl = await uploadImage(imageUrl);
                 if (uploadedUrl) {
                     updatedContent = updatedContent.replace(imageUrl, uploadedUrl);
                 }
-            }
+
         }
 
         setValue("content", updatedContent);
@@ -78,7 +76,7 @@ export function ArticleCreate() {
                 categoryId: data.categoryId,
             });
             toast.success("Article submitted for review");
-            navigate("/wiki");
+            navigate("/wiki")
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to create article");
         }

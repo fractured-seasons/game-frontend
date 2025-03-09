@@ -110,6 +110,12 @@ export default function ArticleView({ activeArticle }) {
         }
     };
 
+    const getImageSrc = (src) => {
+
+        return `${import.meta.env.VITE_APP_API_URL}${src}`;
+
+    };
+
     if (loading) {
         return <Loading />;
     }
@@ -185,7 +191,10 @@ export default function ArticleView({ activeArticle }) {
 
                 <div
                     className="prose"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
+                    dangerouslySetInnerHTML={{ __html: article.content.replace(
+                            /<img src="(\/uploads\/[a-zA-Z0-9\-_.]+)"/g,
+                            (match, p1) => `<img src="${getImageSrc(p1)}"`
+                        ) }}
                 />
 
                 {articleContributors.length > 0 && (

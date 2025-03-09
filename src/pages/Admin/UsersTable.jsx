@@ -28,8 +28,9 @@
                         headers: { "Content-Type": "application/json" },
                         withCredentials: true,
                     });
+                    console.log(response)
                     setUsers(response.data.content);
-                    setTotalPages(response.data.totalPages);
+                    setTotalPages(response.data.page.totalPages);
                 } catch (err) {
                     setError(err.response?.data?.message || "Error fetching users");
                 }
