@@ -8,6 +8,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { FaEyeSlash, FaLock, FaLockOpen } from "react-icons/fa";
 import { MdPushPin } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import SearchInput from "../../components/SearchInput.jsx";
 
 export default function TopicList() {
     const { categoryId } = useParams();
@@ -21,8 +22,11 @@ export default function TopicList() {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isSearching, setIsSearching] = useState(false);
 
     useEffect(() => {
+        if (isSearching) return;
+
         const fetchTopics = async () => {
             try {
                 const response = await api.get(`/forum/topic?categoryId=${categoryId}&page=${page}&size=10`, {
@@ -39,7 +43,7 @@ export default function TopicList() {
         };
 
         fetchTopics();
-    }, [categoryId, page]);
+    }, [categoryId, page, isSearching]);
 
     useEffect(() => {
         if (topics.length === 0) return;
@@ -57,21 +61,61 @@ export default function TopicList() {
     }, [topics]);
 
     const handleSearch = async () => {
-        if (!searchQuery.trim()) return;
+        if (!searchQuery.trim()) {
+            if (isSearching) {
+                try {
+                    const response = await api.get(`/forum/topic?categoryId=${categoryId}&page=${page}&size=10`);
+                    setTopics(response.data.content);
+                    setIsSearching(false);
+                } catch (err) {
+                    toast.error("Error resetting search");
+                }
+            }
+            return;
+        }
+
         try {
             const response = await api.get(`/forum/topic/search?query=${searchQuery}`);
-            setTopics(response.data);
+            const normalizedTopics = response.data.map(topic => ({
+                ...topic,
+                createdBy: {
+                    userName: topic.createdByUsername
+                },
+                createdAt: topic.createdAt || new Date().toISOString()
+            }));
+            setTopics(normalizedTopics);
+            setIsSearching(true);
         } catch {
             toast.error("Error searching topics");
+        }
+    };
+
+    const clearSearch = async () => {
+        setSearchQuery("");
+        try {
+            const response = await api.get(`/forum/topic?categoryId=${categoryId}&page=0&size=10`);
+            setTopics(response.data.content);
+            setPage(0);
+            setIsSearching(false);
+        } catch (err) {
+            toast.error("Error clearing search");
         }
     };
 
     if (loading) return <Loading title="Loading Topics..." />;
     if (error) return <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">{error}</div>;
     if (!topics.length)
-        return <>
-                <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">No Topics Found</div>;
-                <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-center">
+        return (
+            <>
+                <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-end space-x-2">
+                    <SearchInput
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                        handleSearch={handleSearch}
+                        clearSearch={clearSearch}
+                        isSearching={isSearching}
+                        placeholder="Search topics..."
+                    />
                     <button
                         onClick={() => navigate(`/forum/topic/create/${categoryId}`)}
                         className="py-2 px-4 text-white font-pixelify rounded-md shadow-lg transition-all hover:bg-yellow-500 bg-yellow-400 text-sm sm:text-base md:text-lg"
@@ -79,18 +123,23 @@ export default function TopicList() {
                         Start a new topic
                     </button>
                 </div>
+                <div className="text-center text-yellow-400 font-pixelify mt-12 text-xl sm:text-2xl md:text-3xl">
+                    No Topics Found
+                </div>
             </>
+        );
 
 
     return (
         <>
             <div className="mx-4 sm:mx-8 md:mx-12 lg:mx-24 mt-6 sm:mt-8 lg:mt-10 flex justify-end space-x-2">
-                <input
-                    type="text"
+                <SearchInput
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    handleSearch={handleSearch}
+                    clearSearch={clearSearch}
+                    isSearching={isSearching}
                     placeholder="Search topics..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="py-2 px-3 border border-yellow-600 bg-yellow-900/20 text-yellow-200 placeholder-yellow-300 rounded-md focus:border-1 transition-colors pr-10"
                 />
                 <button
                     onClick={() => navigate(`/forum/topic/create/${categoryId}`)}
@@ -119,13 +168,15 @@ export default function TopicList() {
                             </h2>
                         </div>
                         <div className="text-sm sm:text-md text-yellow-500 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                            <span>by {topic.createdBy.userName}</span>
+                            <span>by {topic.createdBy?.userName || topic.createdByUsername}</span>
                             <span>•</span>
-                            <span>{new Date(topic.createdAt).toLocaleDateString()}</span>
+                            <span>{new Date(topic.createdAt || new Date()).toLocaleDateString()}</span>
                         </div>
                     </div>
                 ))}
-                <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+                {!isSearching && (
+                    <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+                )}
             </Section>
         </>
     );

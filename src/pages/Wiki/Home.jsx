@@ -8,6 +8,8 @@ import { MdDelete, MdExpandMore, MdExpandLess } from "react-icons/md";
 import Main from "./Main.jsx";
 import ArticleView from "./ArticleView.jsx";
 import { useNavigate } from "react-router-dom";
+import SearchInput from "../../components/SearchInput.jsx";
+import SearchResultCard from "../../components/SearchResultCard.jsx";
 
 export function Home() {
     const [categories, setCategories] = useState([]);
@@ -21,6 +23,10 @@ export function Home() {
     const { role } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
     const isWikiContributor = ["ROLE_WIKI_CONTRIBUTOR"].includes(role);
+
+    const [searchQuery, setSearchQuery] = useState("");
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -37,7 +43,7 @@ export function Home() {
                 }, {});
                 setExpandedCategories(initialExpandedState);
             } catch (err) {
-                toast.error(err.response?.data?.message || "Error fetching categories");
+                toast.error(err.response.data.message || "Error fetching categories");
             } finally {
                 setLoading(false);
             }
@@ -57,7 +63,7 @@ export function Home() {
                 toast.success(response.data.message || "Wiki category deleted successfully");
                 setCategories((prevCategories) => prevCategories.filter((category) => category.id !== categoryId));
             } catch (err) {
-                toast.error(err.response?.data?.message || "Error deleting wiki category");
+                toast.error(err.response.data.message || "Error deleting wiki category");
             }
         }
     };
@@ -73,13 +79,40 @@ export function Home() {
     const handleArticleClick = (slug) => {
         setActiveArticle(slug);
         setActiveMainPage(false);
+        setIsSearching(false);
+        setSearchQuery("");
+        setSearchResults([]);
     };
+
 
     const handleMainPageClick = () => {
         setActiveMainPage(true);
         setActiveCategory(null);
         setActiveArticle(null);
     };
+
+    const handleSearch = async () => {
+        if (!searchQuery.trim()) return;
+
+        try {
+            const res = await api.get(`/wiki/article/search?query=${searchQuery}`);
+            setSearchResults(res.data);
+            setIsSearching(true);
+            setActiveMainPage(false);
+            setActiveArticle(null);
+        } catch (err) {
+            console.log(err)
+            toast.error(err.response.data.message || "Error searching articles");
+        }
+    };
+
+    const clearSearch = () => {
+        setSearchQuery("");
+        setIsSearching(false);
+        setSearchResults([]);
+        setActiveMainPage(true);
+    };
+
 
     if (loading) {
         return <Loading title="Loading Wiki..." />;
@@ -88,6 +121,16 @@ export function Home() {
     return (
         <>
             <div className="flex justify-center lg:justify-end md:justify-end text-lg mt-4 lg:mr-4">
+                <div className="mr-4">
+                    <SearchInput
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                        handleSearch={handleSearch}
+                        clearSearch={clearSearch}
+                        isSearching={isSearching}
+                        placeholder="Search articles..."
+                    />
+                </div>
                 {isAdmin && (
                     <button onClick={() => navigate(`/wiki/category/create/`)} className="mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
                         Create Category
@@ -155,7 +198,32 @@ export function Home() {
                 </aside>
 
                 <main className="flex-1 p-4">
-                    {activeMainPage ? (
+                    {isSearching ? (
+                        searchResults.length ? (
+                            <>
+                                <h2 className="text-2xl font-pixelify text-yellow-400 mb-6">
+                                    Search Results for “{searchQuery}”
+                                </h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {searchResults.map(article => (
+                                        <SearchResultCard
+                                            key={article.slug}
+                                            article={{
+                                                ...article,
+                                                categoryTitle: categories.find(c => c.id === article.categoryId)?.title
+                                            }}
+                                            highlight={searchQuery}
+                                            onClick={() => handleArticleClick(article.slug)}
+                                        />
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="text-yellow-300 font-pixelify text-xl mt-6">
+                                No results found for “{searchQuery}”.
+                            </div>
+                        )
+                    ) : activeMainPage ? (
                         <Main
                             categories={categories}
                             handleArticleClick={handleArticleClick}
@@ -164,6 +232,7 @@ export function Home() {
                         <ArticleView activeArticle={activeArticle} />
                     )}
                 </main>
+
             </div>
         </>
     );

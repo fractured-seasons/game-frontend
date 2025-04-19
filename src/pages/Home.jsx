@@ -1,6 +1,5 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading.jsx";
 import Carousel from "../components/Carousel.jsx";
 import Section from "../components/Section.jsx";
@@ -10,59 +9,64 @@ import img2 from "../assets/images/logo.png";
 import img3 from "../assets/images/logo.png";
 
 export default function Home() {
-    const { currentUser, loading, logout } = useAuth();
-    const navigate = useNavigate();
+    const { loading } = useAuth();
 
-    if (loading) {
-        return <Loading title={"Loading..."} />;
-    }
+    if (loading) return <Loading title="Loading..." />;
 
-    const imagesPath = [img1, img2, img3];
+    const screenshots = [img1, img2, img3];
 
     const handleDownload = () => {
         const link = document.createElement("a");
         link.href = "/path/to/downloadable/file.pdf";
-        link.download = "filename.pdf";
+        link.download = "FracturedSeasons.pdf";
         link.click();
     };
 
     return (
-        <div className="mx-4 sm:mx-12 lg:mx-24 mt-8 sm:mt-10 lg:mt-12 flex flex-col gap-8">
-            <Section title="Welcome to Fractured Seasons">
-                <div className="flex flex-col items-center">
-                    <img
-                        src={logo}
-                        alt="Logo"
-                        className="w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/3 h-auto"
-                    />
-                    <p className="text-yellow-200 text-lg sm:text-xl lg:text-2xl mt-4 text-center">
-                        Experience a delightful 2D farming adventure,
-                        complete with vibrant characters, charming villages, and ever-changing seasons.
-                    </p>
-                </div>
-            </Section>
+        <main className="w-full px-6 sm:px-12 lg:px-24 py-10 flex flex-col gap-20 text-yellow-200">
 
-            <Section title="Explore the World">
-                <Carousel images={imagesPath} />
-                <p className="text-yellow-200 text-lg sm:text-xl lg:text-2xl mt-4 text-center">
-                    Plant crops, tend to animals, and uncover hidden secrets in every corner of this lush world.
-                    Each season brings new challenges and festivals to discover.
+            <section className="flex flex-col items-center text-center gap-6">
+                <img src={logo} alt="Fractured Seasons Logo" className="w-2/3 sm:w-1/2 lg:w-1/3" />
+                <h1 className="font-pixelify text-4xl sm:text-5xl lg:text-6xl text-yellow-400">A New Kind of Farm Life</h1>
+                <p className="max-w-3xl text-lg sm:text-xl lg:text-2xl">
+                    Welcome to <strong>Fractured Seasons</strong>, a cozy pixel farming sim where the seasons shape your story.
+                    Grow crops, forge friendships, and uncover a world full of charm and mystery.
+                </p>
+            </section>
+
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                {[
+                    { title: "🌱 Grow & Harvest", desc: "Plant a variety of crops, raise animals, and build your dream farm." },
+                    { title: "🎭 Connect & Celebrate", desc: "Meet quirky villagers, build relationships, and attend seasonal festivals." },
+                    { title: "🧭 Discover Secrets", desc: "Explore the world, unlock hidden stories, and witness the changing seasons." }
+                ].map((feature, idx) => (
+                    <div key={idx} className="rounded-3xl backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 p-6 hover:bg-yellow-500/20 transition-all">
+                        <h2 className="font-pixelify text-2xl text-yellow-400 mb-2">{feature.title}</h2>
+                        <p className="text-lg">{feature.desc}</p>
+                    </div>
+                ))}
+            </section>
+
+            <Section title="A Glimpse Into the World">
+                <Carousel images={screenshots} />
+                <p className="text-center text-lg sm:text-xl lg:text-2xl max-w-3xl mx-auto mt-6">
+                    From cozy winter nights to blooming spring mornings, every season in Fractured Seasons
+                    brings new challenges, beauty, and memories to create.
                 </p>
             </Section>
 
-            <Section title="Download & Play">
-                <div className="flex flex-col items-center">
-                    <p className="text-yellow-200 text-lg sm:text-xl lg:text-2xl mt-2 text-center">
-                        Ready to start your journey? Click the button below to download the game!
-                    </p>
-                    <button
-                        onClick={handleDownload}
-                        className="py-2 px-6 mt-6 rounded-3xl backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 text-yellow-400 font-pixelify hover:bg-yellow-500/40 transition-colors"
-                    >
-                        Download Now
-                    </button>
-                </div>
-            </Section>
-        </div>
+            <section className="flex flex-col items-center text-center gap-4">
+                <h2 className="font-pixelify text-3xl sm:text-4xl text-yellow-400">Download & Play</h2>
+                <p className="text-lg sm:text-xl max-w-xl">
+                    Ready to begin your journey? Download now and step into a world where every season tells a story.
+                </p>
+                <button
+                    onClick={handleDownload}
+                    className="mt-4 py-3 px-8 rounded-3xl bg-yellow-500/25 hover:bg-yellow-500/40 backdrop-blur text-yellow-400 font-pixelify outline outline-1 outline-yellow-500 transition-all"
+                >
+                    Download Now
+                </button>
+            </section>
+        </main>
     );
 }

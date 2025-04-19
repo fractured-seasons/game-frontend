@@ -9,7 +9,10 @@ export default function Navbar() {
     const dropdownRef = useRef(null);
     const location = useLocation();
 
-    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+    const toggleDropdown = (e) => {
+        e.stopPropagation();
+        setDropdownOpen(!dropdownOpen);
+    };
 
     const handleLogout = () => {
         logout();
@@ -49,11 +52,11 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            <div className={`relative z-20 backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 ${dropdownOpen ? "rounded-t-3xl" : "rounded-3xl"} mt-2 lg:mt-4 lg:ml-4 text-yellow-400 font-pixelify`}>
+            <div ref={dropdownRef} className={`relative z-20 backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 ${dropdownOpen ? "rounded-t-3xl" : "rounded-3xl"} mt-2 lg:mt-4 lg:ml-4 text-yellow-400 font-pixelify`}>
                 {currentUser ? (
                     <>
                         <button
-                            onClick={toggleDropdown}
+                            onMouseDown={toggleDropdown}
                             className="text-4xl md:text-3xl lg:text-2xl hover:text-yellow-100 py-4 px-8 flex items-center gap-2"
                         >
                             {currentUser.username
@@ -67,7 +70,7 @@ export default function Navbar() {
                         </button>
 
                         {dropdownOpen && (
-                            <div ref={dropdownRef} className="absolute backdrop-blur bg-yellow-500/25 outline outline-1 outline-yellow-500 rounded-b-3xl w-full z-10">
+                            <div ref={dropdownRef} className="absolute bg-yellow-500/40 outline outline-1 outline-yellow-500 rounded-b-3xl w-full z-10">
                                 <Link
                                     to="/profile"
                                     className="block py-2 px-8 text-lg hover:text-yellow-100"

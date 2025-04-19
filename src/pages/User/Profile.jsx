@@ -103,7 +103,7 @@ export default function Profile() {
 
             <Section title="Quick Links">
                 <div className="flex flex-col sm:flex-row gap-6 md:gap-8 justify-around text-center">
-                    <a href="/User/Settings" className="text-lg md:text-xl text-yellow-400 hover:text-yellow-100">
+                    <a href="/settings" className="text-lg md:text-xl text-yellow-400 hover:text-yellow-100">
                         Account Settings
                     </a>
                     <a href="/forum" className="text-lg md:text-xl text-yellow-400 hover:text-yellow-100">

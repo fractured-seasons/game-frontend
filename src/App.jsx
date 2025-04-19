@@ -9,7 +9,7 @@ import Dashboard from "./pages/Admin/Dashboard.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import background from "./assets/images/background.gif";
-import NotFound from "./pages/errors/NotFound.jsx";
+import NotFound from "./pages/Errors/NotFound.jsx";
 import PrivacyPolicy from "./pages/Support/PrivacyPolicy.jsx";
 import TermsOfUse from "./pages/Support/TermsOfUse.jsx";
 import Contact from "./pages/Support/Contact.jsx";

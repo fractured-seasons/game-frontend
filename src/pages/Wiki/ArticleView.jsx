@@ -4,7 +4,7 @@ import Section from "../../components/Section.jsx";
 import toast from "react-hot-toast";
 import { FaEdit, FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { useNavigate, useParams } from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import 'react-quill/dist/quill.snow.css';
 import Loading from "../../components/Loading.jsx";
@@ -17,9 +17,11 @@ export default function ArticleView({ activeArticle }) {
 
     const navigate = useNavigate();
 
+    const location = useLocation();
     const { role } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
     const isWikiContributor = ["ROLE_WIKI_CONTRIBUTOR"].includes(role);
+    const isAdminRoute = location.pathname.includes("admin");
 
     useEffect(() => {
         if (activeArticle) {
@@ -220,13 +222,16 @@ export default function ArticleView({ activeArticle }) {
                 <div className="mt-4 flex flex-wrap justify-center sm:justify-end text-lg">
                     {isAdmin && (
                         <>
-                            <button onClick={() => handleApproveArticle(article.id)} className="mb-2 mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
-                                Approve
-                            </button>
-
-                            <button onClick={() => handleRejectArticle(article.id)} className="mb-2 mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
-                                Reject
-                            </button>
+                            {isAdminRoute && (
+                                <>
+                                    <button onClick={() => handleApproveArticle(article.id)} className="mb-2 mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
+                                        Approve
+                                    </button>
+                                    <button onClick={() => handleRejectArticle(article.id)} className="mb-2 mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
+                                        Reject
+                                    </button>
+                                </>
+                            )}
 
                             <button onClick={() => handleToggleArticleVisibility(article.id)} className="mb-2 mr-4 px-4 py-2 text-white bg-yellow-400 rounded-md shadow-md hover:bg-yellow-500">
                                 {article.hidden ? <FaEye title="Unhide" /> : <FaEyeSlash title="Hide" />}

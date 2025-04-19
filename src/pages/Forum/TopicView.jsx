@@ -131,7 +131,7 @@ export default function TopicView() {
         }
     }
 
-    if (loading) {
+    if (loading || !topic) {
         return <Loading title="Loading Topic..." />;
     }
 
