@@ -66,6 +66,7 @@ export default function ArticleView({ activeArticle }) {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
                 });
+                window.location.reload()
                 toast.success(response.data.message || "Wiki article deleted successfully");
             } catch (err) {
                 toast.error(err.response?.data?.message || "Error deleting wiki article");
