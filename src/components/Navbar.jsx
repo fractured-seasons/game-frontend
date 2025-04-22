@@ -1,5 +1,5 @@
 import {Link, useLocation} from "react-router-dom";
-import {FaHome, FaForumbee, FaBook, FaSignInAlt, FaAngleDown, FaAngleUp} from "react-icons/fa";
+import {FaHome, FaForumbee, FaBook, FaSignInAlt, FaAngleDown, FaAngleUp, FaWrench} from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import {useEffect, useRef, useState} from "react";
 
@@ -48,6 +48,9 @@ export default function Navbar() {
                     </Link>
                     <Link to="/wiki" className="text-4xl md:text-3xl lg:text-2xl hover:text-yellow-100 flex items-center gap-2">
                         <FaBook size={25} /> WIKI
+                    </Link>
+                    <Link to="/updates" className="text-4xl md:text-3xl lg:text-2xl hover:text-yellow-100 flex items-center gap-2">
+                        <FaWrench size={25} /> UPDATES
                     </Link>
                 </div>
             </nav>

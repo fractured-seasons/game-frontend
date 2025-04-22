@@ -39,6 +39,7 @@ import {CategoryCreate as WikiCategoryCreate} from "./pages/Wiki/CategoryCreate.
 import {CategoryEdit as WikiCategoryEdit} from "./pages/Wiki/CategoryEdit.jsx";
 import {ArticleEdit} from "./pages/Wiki/ArticleEdit.jsx";
 import ArticleView from "./pages/Wiki/ArticleView.jsx";
+import UpdatesList from "./pages/Update/UpdatesList.jsx";
 
 function App() {
     const location = useLocation();
@@ -48,7 +49,7 @@ function App() {
         "/register": { type: "color", value: "bg-green-700" },
         "/forgot-password": { type: "color", value: "bg-green-700" },
         "/reset-password": { type: "color", value: "bg-green-700" },
-        "/dashboard": { type: "image", value: background },
+        "/dashboard": { type: "color", value: "bg-green-700" },
         "/about": { type: "image", value: background },
     };
 
@@ -112,6 +113,8 @@ function App() {
                     <Route path="/wiki/category/edit/:categoryId" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR"]}><WikiCategoryEdit/></PrivateRoute>}/>
                     <Route path="/wiki/article/create" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_WIKI_CONTRIBUTOR"]}><ArticleCreate/></PrivateRoute>}/>
                     <Route path="/wiki/article/edit/:articleSlug" element={<PrivateRoute roleNames={["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_WIKI_CONTRIBUTOR"]}><ArticleEdit/></PrivateRoute>}/>
+
+                    <Route path="/updates" element={<UpdatesList/>}/>
 
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
                 </Routes>

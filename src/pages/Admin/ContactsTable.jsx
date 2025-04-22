@@ -5,7 +5,6 @@ import Pagination from "../../components/Pagination.jsx";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../context/AuthContext.jsx";
 import AccessDenied from "../../components/AccessDenied.jsx";
-import Loading from "../../components/Loading.jsx";
 
 export default function ContactsTable() {
     const { isStaff, role } = useAuth()
@@ -49,7 +48,7 @@ export default function ContactsTable() {
 
     if (!contacts.length) {
         return (
-            <Loading/>
+            <Section title={"No Contacts Found"}/>
         );
     }
 
