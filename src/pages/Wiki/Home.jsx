@@ -167,7 +167,7 @@ export function Home() {
                             className={`w-full py-2 px-4 text-lg text-left text-yellow-400 hover:text-yellow-500 font-pixelify ${activeMainPage ? "text-yellow-500" : ""}`}
                             onClick={handleMainPageClick}
                         >
-                            Main page
+                            Overview
                         </button>
                         <ul className="text-yellow-400 font-pixelify">
                             {categories.map(category => (

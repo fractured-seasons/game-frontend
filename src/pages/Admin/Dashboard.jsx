@@ -36,7 +36,7 @@ const Dashboard = () => {
                                 className={`w-full py-2 px-4 text-lg text-left ${activeSection === "main" ? "text-yellow-100" : ""}`}
                                 onClick={() => handleActionClick("main")}
                             >
-                                Main
+                                Overview
                             </button>
                         </li>
                         <li className="hover:text-yellow-100">
@@ -44,7 +44,7 @@ const Dashboard = () => {
                                 className={`w-full py-2 px-4 text-lg text-left ${activeSection === "users" ? "text-yellow-100" : ""}`}
                                 onClick={() => handleActionClick("users")}
                             >
-                                Users Management
+                                Users
                             </button>
                         </li>
                         <li className="hover:text-yellow-100">
@@ -52,7 +52,7 @@ const Dashboard = () => {
                                 className={`w-full py-2 px-4 text-lg text-left ${activeSection === "tickets" ? "text-yellow-100" : ""}`}
                                 onClick={() => handleActionClick("tickets")}
                             >
-                                Tickets
+                                Support Tickets
                             </button>
                         </li>
                         <li className="hover:text-yellow-100">
@@ -60,7 +60,7 @@ const Dashboard = () => {
                                 className={`w-full py-2 px-4 text-lg text-left ${activeSection === "contacts" ? "text-yellow-100" : ""}`}
                                 onClick={() => handleActionClick("contacts")}
                             >
-                                Contacts
+                                Contact Submissions
                             </button>
                         </li>
                         <li className="hover:text-yellow-100">
@@ -68,7 +68,7 @@ const Dashboard = () => {
                                 className={`w-full py-2 px-4 text-lg text-left ${activeSection === "wiki" ? "text-yellow-100" : ""}`}
                                 onClick={() => handleActionClick("wiki")}
                             >
-                                Wiki
+                                Wiki Articles
                             </button>
                         </li>
                     </ul>
