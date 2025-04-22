@@ -59,10 +59,10 @@ export default function Main() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                 {[
-                    { title: "🧑‍💼 User Management", desc: "Review player profiles, manage roles, and oversee activity." },
-                    { title: "🎫 Tickets", desc: "Handle bug reports and support tickets submitted by users." },
-                    { title: "📬 Contacts", desc: "Respond to player messages and form submissions." },
-                    { title: "📚 Wiki Contributions", desc: "Approve, edit, and manage wiki articles submitted by the community." }
+                    { title: "🧑‍💼 Users", desc: "Review player profiles, manage roles, and oversee activity." },
+                    { title: "🎫 Support Tickets", desc: "Handle bug reports and support tickets submitted by users." },
+                    { title: "📬 Contact Submissions", desc: "Respond to player messages and form submissions." },
+                    { title: "📚 Wiki Articles", desc: "Approve, edit, and manage wiki articles submitted by the community." }
                 ].map((item, i) => (
                     <div
                         key={i}
