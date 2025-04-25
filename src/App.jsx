@@ -44,7 +44,7 @@ import UpdatesList from "./pages/Update/UpdatesList.jsx";
 function App() {
     const location = useLocation();
     const backgroundStyles = {
-        "/": { type: "image", value: background },
+        "/": { type: "color", value: "bg-green-700" },
         "/login": { type: "image", value: background },
         "/register": { type: "color", value: "bg-green-700" },
         "/forgot-password": { type: "color", value: "bg-green-700" },

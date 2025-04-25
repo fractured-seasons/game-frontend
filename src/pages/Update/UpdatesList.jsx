@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Section from "../../components/Section.jsx";
 import Pagination from "../../components/Pagination.jsx";
-import { MdExpandMore, MdExpandLess, MdDelete, MdEdit } from "react-icons/md";
-import { FaPlus } from "react-icons/fa";
+import { MdExpandMore, MdExpandLess, MdDelete } from "react-icons/md";
+import { FaPlus, FaEdit } from "react-icons/fa";
 import api from "../../utils/apiUtils";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext.jsx";
@@ -185,7 +185,7 @@ export default function UpdatesList() {
                                     onClick={() => handleEdit(update)}
                                     className="text-yellow-300 hover:text-yellow-100"
                                 >
-                                    <MdEdit className="text-2xl" />
+                                    <FaEdit className="text-2xl" />
                                 </button>
                                 <button
                                     onClick={() => handleDelete(update.id)}

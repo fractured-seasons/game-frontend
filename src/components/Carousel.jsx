@@ -13,7 +13,7 @@ const Carousel = ({ images }) => {
 
     return (
         <div className="relative w-full max-w-4xl h-96 mx-auto my-8 font-pixelify text-yellow-400">
-            <div className="relative w-full h-full overflow-hidden rounded-3xl outline outline-1 outline-yellow-500 backdrop-blur bg-yellow-500/25">
+            <div className="relative w-full h-full overflow-hidden rounded-3xl outline outline-1 outline-yellow-500 bg-yellow-500/25">
                 {images.map((image, index) => (
                     <div
                         key={index}
@@ -32,7 +32,7 @@ const Carousel = ({ images }) => {
 
             <button
                 onClick={prevSlide}
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-yellow-700/25
+                className="z-20 absolute top-1/2 left-4 transform -translate-y-1/2 bg-yellow-700/25
                    text-yellow-400 hover:text-yellow-100
                    outline outline-1 outline-yellow-500
                    px-4 py-2 rounded-full"
@@ -41,7 +41,7 @@ const Carousel = ({ images }) => {
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-yellow-700/25
+                className="z-20 absolute top-1/2 right-4 transform -translate-y-1/2 bg-yellow-700/25
                    text-yellow-400 hover:text-yellow-100
                    outline outline-1 outline-yellow-500
                    px-4 py-2 rounded-full"
