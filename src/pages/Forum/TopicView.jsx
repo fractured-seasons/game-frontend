@@ -175,9 +175,9 @@ export default function TopicView() {
                         <h3 className="text-lg font-bold mt-2">{topic.createdBy.userName}</h3>
                         <p className="text-sm text-yellow-500">{new Date(topic.createdAt).toLocaleDateString()}</p>
                     </div>
-                    <div className="text-base sm:text-lg leading-relaxed text-center md:text-left">
-                        {topic.content}
-                    </div>
+                    <div className="prose text-base sm:text-lg leading-relaxed text-center md:text-left"
+                         dangerouslySetInnerHTML={{ __html: topic.content}}
+                    />
                 </div>
                 <div className="flex space-x-2 text-xl sm:text-2xl text-yellow-400 mt-4">
                     {topic.pinned && <MdPushPin title="Topic Pinned" />}

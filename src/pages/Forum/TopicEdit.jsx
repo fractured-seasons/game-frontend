@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../utils/apiUtils";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ import CheckboxInput from "../../components/CheckboxInput.jsx";
 import Button from "../../components/Button.jsx";
 import Section from "../../components/Section.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
-import TextAreaInput from "../../components/TextAreaInput.jsx";
+import CustomQuill from "../../components/CustomQuill.jsx";
 
 export function TopicEdit() {
     const { topicId } = useParams();
@@ -16,7 +16,8 @@ export function TopicEdit() {
     const navigate = useNavigate();
     const { role } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const quillRef = useRef(null);
+    const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -49,7 +50,7 @@ export function TopicEdit() {
 
         const formattedData = {
             title: data.title,
-            content: data.content,
+            content: getValues("content"),
             categoryId: topic.categoryId,
             pinned: topicOptions.includes("pinned"),
             locked: topicOptions.includes("locked"),
@@ -71,7 +72,16 @@ export function TopicEdit() {
         <Section title="Edit Topic">
             <form onSubmit={handleSubmit(handleUpdate)} className="space-y-6">
                 <InputField label="Topic Title" id="title" type="text" register={register} errors={errors} required />
-                <TextAreaInput label="Content" id="content" register={register} errors={errors} required />
+                <div>
+                    <label className="block font-pixelify text-lg sm:text-xl text-yellow-400">Content</label>
+                    <CustomQuill
+                        ref={quillRef}
+                        value={getValues("content") || ""}
+                        allowImage={false}
+                        onChange={(content) => setValue("content", content)}
+                    />
+                    {errors.content && <p className="text-red-500 text-sm">Content is required</p>}
+                </div>
                 {isAdmin && (
                     <CheckboxInput
                         label="Options"

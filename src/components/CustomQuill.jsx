@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./style/CustomQuill.css";
 
-const CustomQuill = forwardRef(({ value, onChange }, ref) => {
+const CustomQuill = forwardRef(({ value, onChange, allowImage = true }, ref) => {
     const quillRef = useRef(null);
 
     const modules = {
@@ -15,7 +15,7 @@ const CustomQuill = forwardRef(({ value, onChange }, ref) => {
                 ["blockquote", "code-block"],
                 [{ align: [] }],
                 [{ color: [] }, { background: [] }],
-                ["link", "image"],
+                allowImage ? ["link", "image"] : ["link"]
                 ["clean"],
             ],
         },

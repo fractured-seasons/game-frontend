@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../utils/apiUtils";
 import toast from "react-hot-toast";
@@ -7,8 +7,8 @@ import InputField from "../../components/InputField.jsx";
 import Button from "../../components/Button.jsx";
 import Section from "../../components/Section.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
-import TextAreaInput from "../../components/TextAreaInput.jsx";
 import CheckboxInput from "../../components/CheckboxInput.jsx";
+import CustomQuill from "../../components/CustomQuill.jsx";
 
 export function TopicCreate() {
     const navigate = useNavigate();
@@ -16,7 +16,8 @@ export function TopicCreate() {
     const [category, setCategory] = useState(null);
     const { role } = useAuth();
     const isAdmin = ["ROLE_ADMIN", "ROLE_MODERATOR"].includes(role);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const quillRef = useRef(null);
+    const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm();
 
     useEffect(() => {
         const fetchCategory = async () => {
@@ -35,7 +36,7 @@ export function TopicCreate() {
 
         const formattedData = {
             title: data.title,
-            content: data.content,
+            content: getValues("content"),
             categoryId: categoryId,
             pinned: topicOptions.includes("pinned"),
             locked: topicOptions.includes("locked"),
@@ -56,7 +57,16 @@ export function TopicCreate() {
         <Section title={`Create Topic in ${category ? category.name : "Loading..."}`}>
             <form onSubmit={handleSubmit(handleCreate)} className="space-y-6">
                 <InputField label="Topic Title" id="title" type="text" register={register} errors={errors} required />
-                <TextAreaInput label="Content" id="content" register={register} errors={errors} required />
+                <div>
+                    <label className="block font-pixelify text-lg sm:text-xl text-yellow-400">Content</label>
+                    <CustomQuill
+                        ref={quillRef}
+                        value={getValues("content") || ""}
+                        allowImage={false}
+                        onChange={(content) => setValue("content", content)}
+                    />
+                    {errors.content && <p className="text-red-500 text-sm">Content is required</p>}
+                </div>
                 {isAdmin && (
                         <CheckboxInput
                             label="Options"
