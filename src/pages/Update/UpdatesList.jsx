@@ -98,7 +98,7 @@ export default function UpdatesList() {
     return (
         <Section title="System & Feature Updates">
             <p className="text-lg text-yellow-100 mb-6">
-                View, manage, and log major changes across the Fractured Seasons platform. Expand entries to view details.
+                View major changes across the Fractured Seasons platform. Expand entries to view details.
             </p>
 
             {isStaff && (

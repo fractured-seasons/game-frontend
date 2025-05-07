@@ -8,7 +8,6 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import Dashboard from "./pages/Admin/Dashboard.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-import background from "./assets/images/background.gif";
 import NotFound from "./pages/Errors/NotFound.jsx";
 import PrivacyPolicy from "./pages/Support/PrivacyPolicy.jsx";
 import TermsOfUse from "./pages/Support/TermsOfUse.jsx";
@@ -40,17 +39,19 @@ import {CategoryEdit as WikiCategoryEdit} from "./pages/Wiki/CategoryEdit.jsx";
 import {ArticleEdit} from "./pages/Wiki/ArticleEdit.jsx";
 import ArticleView from "./pages/Wiki/ArticleView.jsx";
 import UpdatesList from "./pages/Update/UpdatesList.jsx";
+import background from "./assets/images/background3.gif"
 
 function App() {
     const location = useLocation();
     const backgroundStyles = {
         "/": { type: "color", value: "bg-green-700" },
-        "/login": { type: "image", value: background },
+        "/login": { type: "color", value: "bg-green-700" },
         "/register": { type: "color", value: "bg-green-700" },
         "/forgot-password": { type: "color", value: "bg-green-700" },
         "/reset-password": { type: "color", value: "bg-green-700" },
         "/dashboard": { type: "color", value: "bg-green-700" },
-        "/about": { type: "image", value: background },
+        "/about": { type: "color", value: "bg-green-700" },
+        "/default": { type: "image", value: background },
     };
 
     const currentBackground = backgroundStyles[location.pathname] || { type: "color", value: "bg-green-700" };
