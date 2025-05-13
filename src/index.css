@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Pixelify Sans';
+    src: url('./assets/fonts/PixelifySans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@layer components {
+    .custom-select option {
+        background-color: theme('colors.yellow.900');
+        color: theme('colors.yellow.400');
+    }
+}
